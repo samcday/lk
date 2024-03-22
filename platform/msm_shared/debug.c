@@ -127,7 +127,7 @@ void debug_init(void)
 #endif
 }
 
-void _dputc(char c)
+void platform_dputc(char c)
 {
 #if WITH_DEBUG_LOG_BUF
 	log_putc(c);
@@ -149,7 +149,7 @@ void _dputc(char c)
 #endif
 }
 
-int dgetc(char *c, bool wait)
+int platform_dgetc(char *c, bool wait)
 {
 	int n;
 #if WITH_DEBUG_DCC

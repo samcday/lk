@@ -1,11 +1,13 @@
 LOCAL_DIR := $(GET_LOCAL_DIR)
 
-GLOBAL_INCLUDES += $(LKROOT)/platform/msm_shared/include $(LKROOT)/lib/zlib_inflate
+GLOBAL_INCLUDES += $(LKROOT)/platform/msm_shared/include
+
 
 GLOBAL_DEFINES += ASSERT_ON_TAMPER=1
 
 # TODO(MSM8916): can use miniz?
-MODULES += external/lib/zlib_inflate
+# MODULES += external/lib/zlib_inflate
+# GLOBAL_INCLUDES += $(LKROOT)/lib/zlib_inflate
 
 MODULE_SRCS += \
 	$(LOCAL_DIR)/aboot.c \

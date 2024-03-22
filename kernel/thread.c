@@ -1287,3 +1287,8 @@ status_t thread_unblock_from_wait_queue(thread_t *t, status_t wait_queue_error) 
 
     return NO_ERROR;
 }
+
+// +MSM8916 HACK+
+/* the global critical section count */
+int critical_section_count = 1;
+// -MSM8916 HACK-

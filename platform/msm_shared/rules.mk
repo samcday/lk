@@ -14,8 +14,7 @@ MODULE_SRCS += \
 	$(LOCAL_DIR)/ab_partition_parser.c \
 	$(LOCAL_DIR)/hsusb.c \
 	$(LOCAL_DIR)/boot_stats.c \
-	$(LOCAL_DIR)/qgic_common.c \
-	$(LOCAL_DIR)/crc32.c
+	$(LOCAL_DIR)/qgic_common.c
 
 ifneq ($(filter $(GLOBAL_DEFINES), WITH_DEBUG_JTAG=1),)
 MODULE_SRCS += \
