@@ -27,7 +27,7 @@
  *
  */
 
-#include <compiler.h>
+#include <lk/compiler.h>
 #include "mdtp_defs.h"
 
 
