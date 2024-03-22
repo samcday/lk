@@ -26,7 +26,7 @@
 #include <lk/compiler.h>
 #include <lk/debug.h>
 #include <printf.h>
-#include <err.h>
+#include <lk/err.h>
 
 #include <kernel/mutex.h>
 #include <platform/timer.h>

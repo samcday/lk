@@ -24,6 +24,7 @@ MODULES += \
 	dev/vib \
 	lib/fdt \
 	lib/ptable_android \
+	lib/libc \
 
 GLOBAL_DEFINES += \
 	MEMSIZE=$(MEMSIZE) \

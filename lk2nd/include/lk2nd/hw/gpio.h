@@ -2,7 +2,7 @@
 #ifndef LK2ND_HW_GPIO_H
 #define LK2ND_HW_GPIO_H
 
-#include <bits.h>
+#include <lk/bits.h>
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -21,9 +21,9 @@ struct gpiol_desc {
 };
 
 /* Initial state flags. */
-#define GPIOL_FLAGS_IN			BIT(16)
-#define GPIOL_FLAGS_OUT			BIT(17)
-#define GPIOL_FLAGS_ASSERTED		BIT(18)
+#define GPIOL_FLAGS_IN			MSM8916_BIT(16)
+#define GPIOL_FLAGS_OUT			MSM8916_BIT(17)
+#define GPIOL_FLAGS_ASSERTED		MSM8916_BIT(18)
 #define GPIOL_FLAGS_OUT_ASSERTED	(GPIOL_FLAGS_OUT | GPIOL_FLAGS_ASSERTED)
 #define GPIOL_FLAGS_OUT_DEASSERTED	GPIOL_FLAGS_OUT
 

@@ -35,6 +35,7 @@
 #include <platform/interrupts.h>
 #include <malloc.h>
 #include <platform.h>
+#include <assert.h>
 
 #define PMIC_ARB_V2 0x20010000
 #define CHNL_IDX(sid, pid) ((sid << 8) | pid)

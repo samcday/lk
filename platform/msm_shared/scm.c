@@ -41,6 +41,7 @@
 #include <qseecomi_lk.h>
 #include <qseecom_lk_api.h>
 #include <boot_device.h>
+#include <assert.h>
 #include "scm.h"
 
 #pragma GCC optimize ("O0")

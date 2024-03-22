@@ -19,4 +19,4 @@ $(VERSION_FILE): .FORCE
 	fi
 
 MODULE_SRCS += \
-	$(LOCAL_DIR)/tag.c \
+	$(BUILDDIR)/$(LOCAL_DIR)/tag.c \

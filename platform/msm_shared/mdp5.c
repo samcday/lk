@@ -41,6 +41,7 @@
 #include <clock.h>
 #include <scm.h>
 #include <arch/defines.h>
+#include <assert.h>
 
 #define MDSS_MDP_MAX_PREFILL_FETCH	25
 

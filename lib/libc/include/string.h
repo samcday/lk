@@ -52,4 +52,6 @@ __END_CDECLS
 // +MSM8916 HACK+
 char       *strtok_r(char *s, const char *delim, char **last);
 size_t memscpy (void *, size_t, void const *, size_t);
+char       *strndup(const char *str, size_t size) __MALLOC;
+char  *strstrn(char const *s1, char const *s2, size_t l2) __PURE;
 // -MSM8916 HACK-

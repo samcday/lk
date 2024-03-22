@@ -207,15 +207,4 @@
 #define __IS_ENABLED(comma)		___IS_ENABLED(comma 1, 0)
 #define ___IS_ENABLED(_, enabled, ...)	enabled
 
-#define ASSERT(x) \
-	do { if (unlikely(!(x))) { panic("ASSERT FAILED at (%s:%d): %s\n", __FILE__, __LINE__, #x); } } while (0)
-#define assert(x) ASSERT(x)
-
-#if DEBUGLEVEL > 1
-#define DEBUG_ASSERT(x) \
-	do { if (unlikely(!(x))) { panic("DEBUG ASSERT FAILED at (%s:%d): %s\n", __FILE__, __LINE__, #x); } } while (0)
-#else
-#define DEBUG_ASSERT(x) \
-	do { } while(0)
-#endif
 // -MSM8916 HACK-

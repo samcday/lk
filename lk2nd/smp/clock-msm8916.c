@@ -5,7 +5,7 @@
 #include <boot.h>
 #include <clock.h>
 #include <platform/iomap.h>
-#include <reg.h>
+#include <lk/reg.h>
 
 #define PLL_MODE			0x00
 #define PLL_L_VAL			0x04
@@ -14,11 +14,11 @@
 #define PLL_USER_CTL			0x10
 #define PLL_CONFIG_CTL			0x14
 
-#define PLL_USER_CTL_PLLOUT_LV_MAIN	BIT(0)
-#define PLL_USER_CTL_PLLOUT_LV_AUX	BIT(1)
-#define PLL_USER_CTL_PLLOUT_LV_AUX2	BIT(2)
-#define PLL_USER_CTL_PLLOUT_LV_EARLY	BIT(3)
-#define PLL_USER_CTL_MN_EN		BIT(24)
+#define PLL_USER_CTL_PLLOUT_LV_MAIN	MSM8916_BIT(0)
+#define PLL_USER_CTL_PLLOUT_LV_AUX	MSM8916_BIT(1)
+#define PLL_USER_CTL_PLLOUT_LV_AUX2	MSM8916_BIT(2)
+#define PLL_USER_CTL_PLLOUT_LV_EARLY	MSM8916_BIT(3)
+#define PLL_USER_CTL_MN_EN		MSM8916_BIT(24)
 
 #define MHZ				1000000
 

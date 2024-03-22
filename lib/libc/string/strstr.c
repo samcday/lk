@@ -28,3 +28,22 @@ strstr(char const *s1, char const *s2) {
     }
     return NULL;
 }
+
+// +MSM8916 HACK+
+char *
+strstrn(char const *s1, char const *s2, size_t l2)
+{
+	size_t l1;
+
+	if (!l2)
+		return (char *)s1;
+	l1 = strlen(s1);
+	while(l1 >= l2) {
+		l1--;
+		if (!memcmp(s1,s2,l2))
+			return (char *)s1;
+		s1++;
+	}
+	return NULL;
+}
+// -MSM8916 HACK-

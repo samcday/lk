@@ -2,8 +2,8 @@
 /* Copyright (c) 2019-2022, Stephan Gerhold <stephan@gerhold.net> */
 
 #include <lk/debug.h>
-#include <dev/flash.h>
-#include <lib/ptable.h>
+#include <flash.h>
+#include <lib/ptable_android.h>
 #include <partition_parser.h>
 #include <string.h>
 #include <target.h>

@@ -36,6 +36,7 @@
 #include <rpm-smd.h>
 #include <string.h>
 #include <lk/debug.h>
+#include <assert.h>
 
 __WEAK glink_err_type rpm_glink_send_data(uint32_t *data, uint32_t len, msg_type type)
 {

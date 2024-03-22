@@ -63,3 +63,7 @@ void spin(uint32_t usecs);
 void spin_cycles(uint32_t usecs);
 
 __END_CDECLS
+
+// +MSM8916 HACK+
+unsigned log_copy(void *dst);
+// -MSM8916 HACK-

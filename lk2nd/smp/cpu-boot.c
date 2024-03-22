@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 /* Copyright (c) 2021-2022, Stephan Gerhold <stephan@gerhold.net> */
 
-#include <bits.h>
+#include <lk/bits.h>
 #include <lk/debug.h>
 #include <platform/timer.h>
 #include <scm.h>
@@ -12,11 +12,11 @@
 #include "cpu-boot.h"
 
 #define QCOM_SCM_BOOT_SET_ADDR		0x01
-#define QCOM_SCM_BOOT_FLAG_COLD_ALL	(0 | BIT(0) | BIT(3) | BIT(5))
+#define QCOM_SCM_BOOT_FLAG_COLD_ALL	(0 | MSM8916_BIT(0) | MSM8916_BIT(3) | MSM8916_BIT(5))
 #define QCOM_SCM_BOOT_SET_ADDR_MC	0x11
-#define QCOM_SCM_BOOT_MC_FLAG_AARCH64	BIT(0)
-#define QCOM_SCM_BOOT_MC_FLAG_COLDBOOT	BIT(1)
-#define QCOM_SCM_BOOT_MC_FLAG_WARMBOOT	BIT(2)
+#define QCOM_SCM_BOOT_MC_FLAG_AARCH64	MSM8916_BIT(0)
+#define QCOM_SCM_BOOT_MC_FLAG_COLDBOOT	MSM8916_BIT(1)
+#define QCOM_SCM_BOOT_MC_FLAG_WARMBOOT	MSM8916_BIT(2)
 
 int cpu_boot_set_addr(uintptr_t addr, bool arm64)
 {

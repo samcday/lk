@@ -38,6 +38,7 @@
 #include <reboot.h>
 #include <qtimer.h>
 #include <smem.h>
+#include <assert.h>
 
 #if USER_FORCE_RESET_SUPPORT
 /* Return 1 if it is a force resin triggered by user. */

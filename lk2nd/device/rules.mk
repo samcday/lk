@@ -23,6 +23,7 @@ ifneq ($(LK2ND_COMPATIBLE),)
 GLOBAL_DEFINES += LK2ND_COMPATIBLE="$(LK2ND_COMPATIBLE)"
 endif
 
-include \
-	$(if $(filter msm8916, $(TARGET)), $(LOCAL_DIR)/smb1360/rules.mk) \
-	$(LOCAL_DIR)/dts/rules.mk \
+# TODO(MSM8916):
+# include \
+# 	$(if $(filter msm8916, $(TARGET)), $(LOCAL_DIR)/smb1360/rules.mk) \
+# 	$(LOCAL_DIR)/dts/rules.mk \

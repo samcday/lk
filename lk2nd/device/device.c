@@ -5,6 +5,7 @@
 #include <dev_tree.h>
 #include <fastboot.h>
 #include <string.h>
+#include <assert.h>
 
 #include <libfdt.h>
 #include <lk2nd/device.h>

@@ -2,7 +2,7 @@
 #ifndef LK2ND_BOOT_BOOT_H
 #define LK2ND_BOOT_BOOT_H
 
-#include <list.h>
+#include <lk/list.h>
 #include <string.h>
 
 #include <lk2nd/boot.h>

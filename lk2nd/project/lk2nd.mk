@@ -3,10 +3,10 @@ LK2ND_PROJECT := lk2nd
 LK2ND_DISPLAY ?= cont-splash
 include lk2nd/project/base.mk
 
-# MODULES += \
-# 	lk2nd/device \
-# 	lk2nd/device/2nd \
-# 	lk2nd/hyp \
+MODULES += \
+	lk2nd/device \
+	lk2nd/device/2nd \
+	# lk2nd/hyp \
 
 ifneq ($(ENABLE_FBCON_DISPLAY_MSG),1)
 MODULES += $(if $(filter $(MODULES), lk2nd/display), lk2nd/device/menu)

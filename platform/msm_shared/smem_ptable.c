@@ -34,6 +34,7 @@
 #include <sys/types.h>
 #include <platform/iomap.h>
 #include <lib/ptable_android.h>
+#include <assert.h>
 
 #include "board.h"
 #include "smem.h"

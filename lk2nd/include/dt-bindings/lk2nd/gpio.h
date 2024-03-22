@@ -14,28 +14,24 @@
 #define GPIOL_DEVICE_PMIC_PON	3
 
 /* 0:7 - GPIO configuration flags */
-#ifndef BIT
-#define BIT(x) (1 << (x))
-#endif
-
 #define GPIO_ACTIVE_HIGH	0
-#define GPIO_ACTIVE_LOW		BIT(0)
+#define GPIO_ACTIVE_LOW		MSM8916_BIT(0)
 
 #define GPIO_PUSH_PULL		0
-#define GPIO_SINGLE_ENDED	BIT(1)
+#define GPIO_SINGLE_ENDED	MSM8916_BIT(1)
 
 #define GPIO_LINE_OPEN_SOURCE	0
-#define GPIO_LINE_OPEN_DRAIN	BIT(2)
+#define GPIO_LINE_OPEN_DRAIN	MSM8916_BIT(2)
 
 #define GPIO_OPEN_DRAIN		(GPIO_SINGLE_ENDED | GPIO_LINE_OPEN_DRAIN)
 #define GPIO_OPEN_SOURCE	(GPIO_SINGLE_ENDED | GPIO_LINE_OPEN_SOURCE)
 
 #define GPIO_PERSISTENT		0
-#define GPIO_TRANSITORY		BIT(3)
+#define GPIO_TRANSITORY		MSM8916_BIT(3)
 
 #define GPIO_BIAS_DISABLE	0
-#define GPIO_PULL_UP		BIT(4)
-#define GPIO_PULL_DOWN		BIT(5)
+#define GPIO_PULL_UP		MSM8916_BIT(4)
+#define GPIO_PULL_DOWN		MSM8916_BIT(5)
 
 /* 8:15 - lk2nd extensions to the GPIO flags */
 #define GPIO_DRIVE_STR(x)	(((x) & 0x0f) << 8) /* bits 8:11 */
@@ -44,7 +40,7 @@
 
 /* 24:31 - Device-specific config flags */
 
-#define GPIO_PMIC_VIN_SEL(x)	(((x) & 0x07) << 24 | BIT(27)) /* bits 24:27 */
+#define GPIO_PMIC_VIN_SEL(x)	(((x) & 0x07) << 24 | MSM8916_BIT(27)) /* bits 24:27 */
 
 /* device-specific definitions */
 

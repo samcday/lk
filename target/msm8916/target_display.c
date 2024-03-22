@@ -45,6 +45,7 @@
 #include <i2c_qup.h>
 #include <blsp_qup.h>
 #include <mipi_dsi_i2c.h>
+#include <assert.h>
 
 #include "include/panel.h"
 #include "include/display_resource.h"

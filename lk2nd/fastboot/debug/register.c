@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: BSD-3-Clause
 /* Copyright (c) 2022-2023, Stephan Gerhold <stephan@gerhold.net> */
 
+// TODO(MSM8916):
+#if false
 #include <fastboot.h>
-#include <reg.h>
+#include <lk/reg.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
@@ -94,4 +96,5 @@ static void writepmic(uint8_t val, unsigned short addr)
 
 FASTBOOT_REGISTER_OEM_READ(pmic, uint8_t, "%#02x");
 FASTBOOT_REGISTER_OEM_WRITE(pmic, uint8_t);
+#endif
 #endif

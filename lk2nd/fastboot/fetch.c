@@ -4,9 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <dev/flash.h>
+#include <flash.h>
 #include <fastboot.h>
-#include <lib/ptable.h>
+#include <lib/ptable_android.h>
 #include <partition_parser.h>
 #include <target.h>
 

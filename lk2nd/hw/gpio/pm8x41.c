@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 /* Copyright (c) 2022 Nikita Travkin <nikita@trvn.ru> */
 
-#include <bits.h>
+#include <lk/bits.h>
 #include <lk/debug.h>
 #include <stdint.h>
 

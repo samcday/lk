@@ -4,7 +4,7 @@
 #include <lk/debug.h>
 #include <lib/bio.h>
 #include <lib/fs.h>
-#include <list.h>
+#include <lk/list.h>
 #include <stdlib.h>
 #include <target.h>
 
@@ -22,7 +22,9 @@
  */
 static void lk2nd_scan_devices(void)
 {
-	struct bdev_struct *bdevs = bio_get_bdevs();
+	// TODO(MSM8916):
+	#if false
+	struct bdev *bdevs = bio_get_bdevs();
 	char mountpoint[16];
 	bdev_t *bdev;
 	int ret;
@@ -44,7 +46,7 @@ static void lk2nd_scan_devices(void)
 		if (ret < 0)
 			continue;
 
-		if (DEBUGLEVEL >= SPEW) {
+		if (LK_DEBUGLEVEL >= SPEW) {
 			dprintf(SPEW, "Scanning %s ...\n", bdev->name);
 			dprintf(SPEW, "%s\n", mountpoint);
 			lk2nd_print_file_tree(mountpoint, " ");
@@ -52,6 +54,7 @@ static void lk2nd_scan_devices(void)
 
 		lk2nd_try_extlinux(mountpoint);
 	}
+	#endif
 }
 
 /**

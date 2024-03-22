@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 #include <lk/debug.h>
-#include <err.h>
+#include <lk/err.h>
 
 #include <libfdt.h>
 #include <lk2nd/hw/gpio_i2c.h>
@@ -28,7 +28,7 @@ status_t gpio_i2c_get(const void *dtb, int node, gpio_i2c_info_t *i, uint8_t *ad
 		prop = fdt_getprop(dtb, node, "i2c-reg", &len);
 		if (len != sizeof(*prop)) {
 			dprintf(CRITICAL, "Invalid i2c-reg property: %d\n", len);
-			return ERROR;
+			return ERR_GENERIC;
 		}
 		*addr = fdt32_to_cpu(*prop);
 	}

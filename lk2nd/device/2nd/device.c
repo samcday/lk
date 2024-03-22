@@ -20,9 +20,7 @@ const void *lk2nd_device2nd_init(void)
 	const void *dtb = lk2nd_device2nd_parse_tags();
 
 	if (lk2nd_dev.cmdline) {
-		dprintf(INFO, "Command line from previous bootloader: ");
-		dputs(INFO, lk2nd_dev.cmdline);
-		dputc(INFO, '\n');
+		dprintf(INFO, "Command line from previous bootloader: %s\n", lk2nd_dev.cmdline);
 
 		lk2nd_device2nd_parse_cmdline();
 		lk2nd_device2nd_update_serialno(lk2nd_dev.serialno);

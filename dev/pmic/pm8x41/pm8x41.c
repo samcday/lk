@@ -37,6 +37,7 @@
 #include <regulator.h>
 #include <platform/timer.h>
 #include <pm_vib.h>
+#include <assert.h>
 
 #define QPNP_VIB_EN    MSM8916_BIT(7)
 

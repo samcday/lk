@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: BSD-3-Clause
 /* Copyright (c) 2022-2023, Stephan Gerhold <stephan@gerhold.net> */
 
+// TODO(MSM8916):
+
+#if 0
 #include <arch/defines.h>
 #include <fastboot.h>
 #include <printf.h>
@@ -87,3 +90,4 @@ static void cmd_oem_debug_cpuid(const char *arg, void *data, unsigned sz)
 	fastboot_okay("");
 }
 FASTBOOT_REGISTER("oem debug cpuid", cmd_oem_debug_cpuid);
+#endif

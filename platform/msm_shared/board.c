@@ -32,6 +32,7 @@
 #include <smem.h>
 #include <baseband.h>
 #include <boot_device.h>
+#include <assert.h>
 
 static uint16_t format_major = 0;
 static uint16_t format_minor = 0;

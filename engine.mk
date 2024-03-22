@@ -111,7 +111,7 @@ ARCH_OBJDUMP_FLAGS :=
 THUMBCFLAGS := # optional compile switches set by arm architecture when compiling in thumb mode
 
 # top level rule
-all:: $(OUTBIN) $(OUTELF).lst $(OUTELF).debug.lst $(OUTELF).sym $(OUTELF).sym.sorted $(OUTELF).size $(OUTELF).dump $(BUILDDIR)/srcfiles.txt $(BUILDDIR)/include_paths.txt
+all:: $(OUTBIN) $(OUTELF).lst $(OUTELF).debug.lst $(OUTELF).sym $(OUTELF).sym.sorted $(OUTELF).size $(OUTELF).dump $(BUILDDIR)/srcfiles.txt $(BUILDDIR)/include_paths.txt APPSBOOTHEADER
 
 # master module object list
 ALLMODULE_OBJS :=

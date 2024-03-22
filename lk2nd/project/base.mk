@@ -24,14 +24,15 @@ GPL ?= 1
 MODULES += \
 	lk2nd \
 	lk2nd/fastboot \
-	lk2nd/fastboot/debug \
 	lk2nd/hw/gpio \
 	lk2nd/hw/i2c \
-	lk2nd/ramoops \
-	lk2nd/serialno \
 	lk2nd/smp \
 	lk2nd/smp/spin-table \
 	lk2nd/version \
+	# lk2nd/fastboot/debug \
+	# lk2nd/ramoops \
+	# lk2nd/serialno \
+	# TODO(MSM8916): ^
 
 # Disable SMP spin table if unsupported (without throwing errors)
 LK2ND_SMP_OPTIONAL := 1

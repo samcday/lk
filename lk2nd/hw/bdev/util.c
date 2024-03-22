@@ -1,9 +1,12 @@
 // SPDX-License-Identifier: BSD-3-Clause
 /* Copyright (c) 2022 Nikita Travkin <nikita@trvn.ru> */
 
+// TODO(MSM8916):
+
+#if 0
 #include <lk/debug.h>
 #include <lib/bio.h>
-#include <list.h>
+#include <lk/list.h>
 #include <stdlib.h>
 
 #include "bdev.h"
@@ -28,3 +31,4 @@ void lk2nd_bdev_dump_devices(void)
 			);
 	}
 }
+#endif

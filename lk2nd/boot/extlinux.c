@@ -1,8 +1,11 @@
 // SPDX-License-Identifier: BSD-3-Clause
 /* Copyright (c) 2023 Nikita Travkin <nikita@trvn.ru> */
 
+// TODO(MSM8916):
+#if false
 #include <lk/debug.h>
-#include <decompress.h>
+// TODO(MSM8916):
+// #include <decompress.h>
 #include <lib/fs.h>
 #include <libfdt.h>
 #include <platform.h>
@@ -554,3 +557,4 @@ error:
 	dprintf(INFO, "Failed to parse extlinux.conf\n");
 	free(data);
 }
+#endif

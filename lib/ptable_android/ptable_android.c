@@ -33,6 +33,7 @@
 #include <string.h>
 #include <lk/debug.h>
 #include <lib/ptable_android.h>
+#include <assert.h>
 
 void ptable_init(struct ptable *ptable)
 {

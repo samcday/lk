@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: BSD-3-Clause
 /* Copyright (c) 2021-2022, Stephan Gerhold <stephan@gerhold.net> */
 
+// TODO(MSM8916):
+#if 0
 #include <printf.h>
 
 #include <dev/fbcon.h>
@@ -50,3 +52,4 @@ static void cmd_oem_screenshot(const char *arg, void *data, unsigned sz)
 	fastboot_stage(data, end - data);
 }
 FASTBOOT_REGISTER("oem screenshot", cmd_oem_screenshot);
+#endif

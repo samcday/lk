@@ -34,6 +34,7 @@
 #include <libfdt.h>
 #include <platform/iomap.h>
 #include <dev_tree.h>
+#include <assert.h>
 
 uint32_t target_dev_tree_mem(void *fdt, uint32_t memory_node_offset)
 {
