@@ -155,7 +155,7 @@ typedef struct {
   * @param  __HANDLE__: WWDG handle
   * @retval None
   */
-#define __HAL_WWDG_ENABLE(__HANDLE__) SET_BIT((__HANDLE__)->Instance->CR, WWDG_CR_WDGA)
+#define __HAL_WWDG_ENABLE(__HANDLE__) SET_MSM8916_BIT((__HANDLE__)->Instance->CR, WWDG_CR_WDGA)
 
 /**
   * @brief  Disables the WWDG peripheral.
@@ -194,7 +194,7 @@ typedef struct {
   * @note   Once enabled this interrupt cannot be disabled except by a system reset.
   * @retval None
   */
-#define __HAL_WWDG_ENABLE_IT(__HANDLE__, __INTERRUPT__) SET_BIT((__HANDLE__)->Instance->CFR, (__INTERRUPT__))
+#define __HAL_WWDG_ENABLE_IT(__HANDLE__, __INTERRUPT__) SET_MSM8916_BIT((__HANDLE__)->Instance->CFR, (__INTERRUPT__))
 
 /**
   * @brief  Disables the WWDG early wakeup interrupt.

@@ -10,6 +10,11 @@
 #include <lk/compiler.h>
 #include <stdbool.h>
 
+// +MSM8916 HACK+
+#include <sys/types.h>
+#include <scm.h>
+// -MSM8916 HACK-
+
 __BEGIN_CDECLS
 
 /* Standard console output routines that may be buffered */

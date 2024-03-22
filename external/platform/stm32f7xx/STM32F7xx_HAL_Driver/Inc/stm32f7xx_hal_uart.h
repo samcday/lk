@@ -626,8 +626,8 @@ typedef struct {
   */
 #define __HAL_UART_FLUSH_DRREGISTER(__HANDLE__)  \
   do{                \
-      SET_BIT((__HANDLE__)->Instance->RQR, UART_RXDATA_FLUSH_REQUEST); \
-      SET_BIT((__HANDLE__)->Instance->RQR, UART_TXDATA_FLUSH_REQUEST); \
+      SET_MSM8916_BIT((__HANDLE__)->Instance->RQR, UART_RXDATA_FLUSH_REQUEST); \
+      SET_MSM8916_BIT((__HANDLE__)->Instance->RQR, UART_TXDATA_FLUSH_REQUEST); \
     }  while(0)
 
 /** @brief  Clears the specified UART ISR flag, in setting the proper ICR register flag.
@@ -839,7 +839,7 @@ typedef struct {
   */
 #define __HAL_UART_HWCONTROL_CTS_ENABLE(__HANDLE__)        \
   do{                                                      \
-    SET_BIT((__HANDLE__)->Instance->CR3, USART_CR3_CTSE);  \
+    SET_MSM8916_BIT((__HANDLE__)->Instance->CR3, USART_CR3_CTSE);  \
     (__HANDLE__)->Init.HwFlowCtl |= USART_CR3_CTSE;        \
   } while(0)
 
@@ -858,7 +858,7 @@ typedef struct {
   */
 #define __HAL_UART_HWCONTROL_CTS_DISABLE(__HANDLE__)        \
   do{                                                       \
-    CLEAR_BIT((__HANDLE__)->Instance->CR3, USART_CR3_CTSE); \
+    CLEAR_MSM8916_BIT((__HANDLE__)->Instance->CR3, USART_CR3_CTSE); \
     (__HANDLE__)->Init.HwFlowCtl &= ~(USART_CR3_CTSE);      \
   } while(0)
 
@@ -877,7 +877,7 @@ typedef struct {
   */
 #define __HAL_UART_HWCONTROL_RTS_ENABLE(__HANDLE__)       \
   do{                                                     \
-    SET_BIT((__HANDLE__)->Instance->CR3, USART_CR3_RTSE); \
+    SET_MSM8916_BIT((__HANDLE__)->Instance->CR3, USART_CR3_RTSE); \
     (__HANDLE__)->Init.HwFlowCtl |= USART_CR3_RTSE;       \
   } while(0)
 
@@ -896,7 +896,7 @@ typedef struct {
   */
 #define __HAL_UART_HWCONTROL_RTS_DISABLE(__HANDLE__)       \
   do{                                                      \
-    CLEAR_BIT((__HANDLE__)->Instance->CR3, USART_CR3_RTSE);\
+    CLEAR_MSM8916_BIT((__HANDLE__)->Instance->CR3, USART_CR3_RTSE);\
     (__HANDLE__)->Init.HwFlowCtl &= ~(USART_CR3_RTSE);     \
   } while(0)
 

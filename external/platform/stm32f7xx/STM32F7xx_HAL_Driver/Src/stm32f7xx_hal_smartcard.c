@@ -899,7 +899,7 @@ static void SMARTCARD_SetConfig(SMARTCARD_HandleTypeDef *hsc)
     assert_param(IS_SMARTCARD_MODE(hsc->Init.Mode));
     assert_param(IS_SMARTCARD_POLARITY(hsc->Init.CLKPolarity));
     assert_param(IS_SMARTCARD_PHASE(hsc->Init.CLKPhase));
-    assert_param(IS_SMARTCARD_LASTBIT(hsc->Init.CLKLastBit));
+    assert_param(IS_SMARTCARD_LASTMSM8916_BIT(hsc->Init.CLKLastBit));
     assert_param(IS_SMARTCARD_ONE_BIT_SAMPLE(hsc->Init.OneBitSampling));
     assert_param(IS_SMARTCARD_NACK(hsc->Init.NACKState));
     assert_param(IS_SMARTCARD_TIMEOUT(hsc->Init.TimeOutEnable));

@@ -31,6 +31,12 @@ C_STRING_OPS := \
 	strtok \
 	strxfrm
 
+# +MSM8916 HACK+
+C_STRING_OPS += \
+	memscpy \
+	strrev
+# -MSM8916 HACK-
+
 LIBC_STRING_C_DIR := $(LOCAL_DIR)
 
 # include the arch specific string routines

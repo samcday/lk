@@ -25,7 +25,7 @@
 #include <lib/bio.h>
 #include <lib/bootargs.h>
 #include <lib/bootimage.h>
-#include <lib/ptable.h>
+#include <lib/ptable_android.h>
 #include <lib/sysparam.h>
 
 #include <app/lkboot.h>

@@ -44,3 +44,10 @@ struct fbcon_config {
 void fbcon_setup(struct fbcon_config *cfg);
 void fbcon_putc(char c);
 
+
+// +MSM8916 HACK+
+#define FB_FORMAT_RGB565 0
+#define FB_FORMAT_RGB666 1
+#define FB_FORMAT_RGB666_LOOSE 2
+#define FB_FORMAT_RGB888 3
+// -MSM8916 HACK-

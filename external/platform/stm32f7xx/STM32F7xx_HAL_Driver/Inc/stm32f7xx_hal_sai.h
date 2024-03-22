@@ -798,7 +798,7 @@ uint32_t HAL_SAI_GetError(SAI_HandleTypeDef *hsai);
                                          ((DATASIZE) == SAI_DATASIZE_24) || \
                                          ((DATASIZE) == SAI_DATASIZE_32))
 
-#define IS_SAI_BLOCK_FIRST_BIT(BIT) (((BIT) == SAI_FIRSTBIT_MSB) || \
+#define IS_SAI_BLOCK_FIRST_MSM8916_BIT(BIT) (((BIT) == SAI_FIRSTBIT_MSB) || \
                                      ((BIT) == SAI_FIRSTBIT_LSB))
 
 #define IS_SAI_BLOCK_CLOCK_STROBING(CLOCK) (((CLOCK) == SAI_CLOCKSTROBING_FALLINGEDGE) || \

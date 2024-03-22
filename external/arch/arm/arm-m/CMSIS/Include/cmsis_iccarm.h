@@ -570,7 +570,7 @@ __STATIC_FORCEINLINE void __TZ_set_CONTROL_NS(uint32_t control)
       return count;
     }
 
-    __STATIC_INLINE uint32_t __RBIT(uint32_t v)
+    __STATIC_INLINE uint32_t __RMSM8916_BIT(uint32_t v)
     {
       uint8_t sc = 31U;
       uint32_t r = v;

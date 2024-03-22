@@ -408,13 +408,13 @@ typedef struct {
   * @param  __HANDLE__: specifies the I2C Handle.
   * @retval None
   */
-#define __HAL_I2C_ENABLE(__HANDLE__)                            (SET_BIT((__HANDLE__)->Instance->CR1,  I2C_CR1_PE))
+#define __HAL_I2C_ENABLE(__HANDLE__)                            (SET_MSM8916_BIT((__HANDLE__)->Instance->CR1,  I2C_CR1_PE))
 
 /** @brief  Disable the specified I2C peripheral.
   * @param  __HANDLE__: specifies the I2C Handle.
   * @retval None
   */
-#define __HAL_I2C_DISABLE(__HANDLE__)                           (CLEAR_BIT((__HANDLE__)->Instance->CR1, I2C_CR1_PE))
+#define __HAL_I2C_DISABLE(__HANDLE__)                           (CLEAR_MSM8916_BIT((__HANDLE__)->Instance->CR1, I2C_CR1_PE))
 
 /**
   * @}

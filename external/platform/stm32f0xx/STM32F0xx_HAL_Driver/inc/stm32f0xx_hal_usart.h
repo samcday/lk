@@ -584,7 +584,7 @@ typedef struct
   * @param __LASTBIT__ USART frame last bit clock pulse setting. 
   * @retval SET (__LASTBIT__ is valid) or RESET (__LASTBIT__ is invalid)
   */
-#define IS_USART_LASTBIT(__LASTBIT__) (((__LASTBIT__) == USART_LASTBIT_DISABLE) || \
+#define IS_USART_LASTMSM8916_BIT(__LASTBIT__) (((__LASTBIT__) == USART_LASTBIT_DISABLE) || \
                                        ((__LASTBIT__) == USART_LASTBIT_ENABLE))
 
 /**

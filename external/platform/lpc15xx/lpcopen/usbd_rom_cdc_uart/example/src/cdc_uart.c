@@ -57,13 +57,13 @@
 
 /* Ring buffer size */
 #define UCOM_BUF_SZ         64			/* The size should always be 2^n type.*/
-#define UCOM_TX_CONNECTED   _BIT(8)		/* connection state is for both RX/Tx */
-#define UCOM_TX_BUSY        _BIT(0)
+#define UCOM_TX_CONNECTED   _MSM8916_BIT(8)		/* connection state is for both RX/Tx */
+#define UCOM_TX_BUSY        _MSM8916_BIT(0)
 
-#define UCOM_RX_UART_DIS    _BIT(0)
-#define UCOM_RX_BUF_FULL    _BIT(1)
-#define UCOM_RX_BUF_QUEUED  _BIT(2)
-#define UCOM_RX_DB_QUEUED   _BIT(3)
+#define UCOM_RX_UART_DIS    _MSM8916_BIT(0)
+#define UCOM_RX_BUF_FULL    _MSM8916_BIT(1)
+#define UCOM_RX_BUF_QUEUED  _MSM8916_BIT(2)
+#define UCOM_RX_DB_QUEUED   _MSM8916_BIT(3)
 
 /**
  * Structure containing Virtual Comm port control data

@@ -471,19 +471,19 @@ typedef struct
   * @param  __HANDLE__ specifies the SMBUS Handle.
   * @retval None
   */
-#define __HAL_SMBUS_ENABLE(__HANDLE__)                  (SET_BIT((__HANDLE__)->Instance->CR1, I2C_CR1_PE))
+#define __HAL_SMBUS_ENABLE(__HANDLE__)                  (SET_MSM8916_BIT((__HANDLE__)->Instance->CR1, I2C_CR1_PE))
 
 /** @brief  Disable the specified SMBUS peripheral.
   * @param  __HANDLE__ specifies the SMBUS Handle.
   * @retval None
   */
-#define __HAL_SMBUS_DISABLE(__HANDLE__)                 (CLEAR_BIT((__HANDLE__)->Instance->CR1, I2C_CR1_PE))
+#define __HAL_SMBUS_DISABLE(__HANDLE__)                 (CLEAR_MSM8916_BIT((__HANDLE__)->Instance->CR1, I2C_CR1_PE))
 
 /** @brief  Generate a Non-Acknowledge SMBUS peripheral in Slave mode.
   * @param  __HANDLE__ specifies the SMBUS Handle.
   * @retval None
   */
-#define __HAL_SMBUS_GENERATE_NACK(__HANDLE__)           (SET_BIT((__HANDLE__)->Instance->CR2, I2C_CR2_NACK))
+#define __HAL_SMBUS_GENERATE_NACK(__HANDLE__)           (SET_MSM8916_BIT((__HANDLE__)->Instance->CR2, I2C_CR2_NACK))
 
 /**
   * @}

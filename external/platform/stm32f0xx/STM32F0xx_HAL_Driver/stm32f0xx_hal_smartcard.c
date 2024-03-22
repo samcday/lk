@@ -1681,7 +1681,7 @@ static HAL_StatusTypeDef SMARTCARD_SetConfig(SMARTCARD_HandleTypeDef *hsmartcard
   assert_param(IS_SMARTCARD_MODE(hsmartcard->Init.Mode));
   assert_param(IS_SMARTCARD_POLARITY(hsmartcard->Init.CLKPolarity));
   assert_param(IS_SMARTCARD_PHASE(hsmartcard->Init.CLKPhase));
-  assert_param(IS_SMARTCARD_LASTBIT(hsmartcard->Init.CLKLastBit));
+  assert_param(IS_SMARTCARD_LASTMSM8916_BIT(hsmartcard->Init.CLKLastBit));
   assert_param(IS_SMARTCARD_ONE_BIT_SAMPLE(hsmartcard->Init.OneBitSampling));
   assert_param(IS_SMARTCARD_NACK(hsmartcard->Init.NACKEnable));
   assert_param(IS_SMARTCARD_TIMEOUT(hsmartcard->Init.TimeOutEnable));

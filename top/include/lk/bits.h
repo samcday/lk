@@ -17,6 +17,10 @@ __BEGIN_CDECLS
 #define ctz(x) __builtin_ctz(x)
 #define ffs(x) __builtin_ffs(x)
 
+// +MSM8916 HACK+
+#define MSM8916_BIT(bit) (1 << (bit))
+// -MSM8916 HACK-
+
 #define BIT(x, bit) ((x) & (1UL << (bit)))
 #define BIT_SHIFT(x, bit) (((x) >> (bit)) & 1)
 #define BITS(x, high, low) ((x) & (((1UL<<((high)+1))-1) & ~((1UL<<(low))-1)))

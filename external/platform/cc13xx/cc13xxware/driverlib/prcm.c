@@ -132,7 +132,7 @@ static const uint32_t g_pui32DCGCRegs[] =
 // This macro extracts the peripheral instance number and generates bit mask
 //
 //*****************************************************************************
-#define PRCM_PERIPH_MASKBIT(a) (0x00000001 << ((a) & 0xf))
+#define PRCM_PERIPH_MASKMSM8916_BIT(a) (0x00000001 << ((a) & 0xf))
 
 
 //*****************************************************************************
@@ -497,7 +497,7 @@ PRCMPeripheralRunEnable(uint32_t ui32Peripheral)
     // Enable module in Run Mode.
     //
     HWREG(PRCM_BASE + g_pui32RCGCRegs[PRCM_PERIPH_INDEX(ui32Peripheral)]) |=
-        PRCM_PERIPH_MASKBIT(ui32Peripheral);
+        PRCM_PERIPH_MASKMSM8916_BIT(ui32Peripheral);
 }
 
 //*****************************************************************************
@@ -517,7 +517,7 @@ PRCMPeripheralRunDisable(uint32_t ui32Peripheral)
     // Disable module in Run Mode.
     //
     HWREG(PRCM_BASE + g_pui32RCGCRegs[PRCM_PERIPH_INDEX(ui32Peripheral)]) &=
-        ~PRCM_PERIPH_MASKBIT(ui32Peripheral);
+        ~PRCM_PERIPH_MASKMSM8916_BIT(ui32Peripheral);
 }
 
 //*****************************************************************************
@@ -537,7 +537,7 @@ PRCMPeripheralSleepEnable(uint32_t ui32Peripheral)
     // Enable this peripheral in sleep mode.
     //
     HWREG(PRCM_BASE + g_pui32SCGCRegs[PRCM_PERIPH_INDEX(ui32Peripheral)]) |=
-        PRCM_PERIPH_MASKBIT(ui32Peripheral);
+        PRCM_PERIPH_MASKMSM8916_BIT(ui32Peripheral);
 }
 
 //*****************************************************************************
@@ -557,7 +557,7 @@ PRCMPeripheralSleepDisable(uint32_t ui32Peripheral)
     // Disable this peripheral in sleep mode
     //
     HWREG(PRCM_BASE + g_pui32SCGCRegs[PRCM_PERIPH_INDEX(ui32Peripheral)]) &=
-        ~PRCM_PERIPH_MASKBIT(ui32Peripheral);
+        ~PRCM_PERIPH_MASKMSM8916_BIT(ui32Peripheral);
 }
 
 //*****************************************************************************
@@ -577,7 +577,7 @@ PRCMPeripheralDeepSleepEnable(uint32_t ui32Peripheral)
     // Enable this peripheral in deep-sleep mode.
     //
     HWREG(PRCM_BASE + g_pui32DCGCRegs[PRCM_PERIPH_INDEX(ui32Peripheral)]) |=
-        PRCM_PERIPH_MASKBIT(ui32Peripheral);
+        PRCM_PERIPH_MASKMSM8916_BIT(ui32Peripheral);
 }
 
 //*****************************************************************************
@@ -597,7 +597,7 @@ PRCMPeripheralDeepSleepDisable(uint32_t ui32Peripheral)
     // Disable this peripheral in Deep Sleep mode.
     //
     HWREG(PRCM_BASE + g_pui32DCGCRegs[PRCM_PERIPH_INDEX(ui32Peripheral)]) &=
-        ~PRCM_PERIPH_MASKBIT(ui32Peripheral);
+        ~PRCM_PERIPH_MASKMSM8916_BIT(ui32Peripheral);
 }
 
 //*****************************************************************************

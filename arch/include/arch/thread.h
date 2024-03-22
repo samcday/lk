@@ -19,3 +19,27 @@ void arch_thread_initialize(struct thread *);
 void arch_context_switch(struct thread *oldthread, struct thread *newthread);
 
 __END_CDECLS
+
+// +MSM8916 HACK+
+/* critical sections */
+extern int critical_section_count;
+
+static inline __ALWAYS_INLINE void enter_critical_section(void)
+{
+	critical_section_count++;
+	if (critical_section_count == 1)
+		arch_disable_ints();
+}
+
+static inline __ALWAYS_INLINE void exit_critical_section(void)
+{
+	critical_section_count--;
+	if (critical_section_count == 0)
+		arch_enable_ints();
+}
+
+static inline __ALWAYS_INLINE bool in_critical_section(void)
+{
+	return critical_section_count > 0;
+}
+// -MSM8916 HACK-

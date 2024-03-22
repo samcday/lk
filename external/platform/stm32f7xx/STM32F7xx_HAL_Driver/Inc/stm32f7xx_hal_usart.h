@@ -656,7 +656,7 @@ uint32_t               HAL_USART_GetError(USART_HandleTypeDef *husart);
                                        ((__CLOCK__)== USART_CLOCK_ENABLE))
 #define IS_USART_POLARITY(__CPOL__) (((__CPOL__) == USART_POLARITY_LOW) || ((__CPOL__) == USART_POLARITY_HIGH))
 #define IS_USART_PHASE(__CPHA__) (((__CPHA__) == USART_PHASE_1EDGE) || ((__CPHA__) == USART_PHASE_2EDGE))
-#define IS_USART_LASTBIT(__LASTBIT__) (((__LASTBIT__) == USART_LASTBIT_DISABLE) || \
+#define IS_USART_LASTMSM8916_BIT(__LASTBIT__) (((__LASTBIT__) == USART_LASTBIT_DISABLE) || \
                                        ((__LASTBIT__) == USART_LASTBIT_ENABLE))
 #define IS_USART_REQUEST_PARAMETER(__PARAM__) (((__PARAM__) == USART_RXDATA_FLUSH_REQUEST) || \
                                                ((__PARAM__) == USART_TXDATA_FLUSH_REQUEST))

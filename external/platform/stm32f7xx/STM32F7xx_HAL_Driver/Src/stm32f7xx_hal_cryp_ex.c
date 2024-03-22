@@ -925,10 +925,10 @@ HAL_StatusTypeDef HAL_CRYPEx_AESGCM_Finish(CRYP_HandleTypeDef *hcryp, uint32_t S
         /* Write the number of bits in header (64 bits) followed by the number of bits
            in the payload */
         if (hcryp->Init.DataType == CRYP_DATATYPE_1B) {
-            hcryp->Instance->DR = __RBIT(headerlength >> 32);
-            hcryp->Instance->DR = __RBIT(headerlength);
-            hcryp->Instance->DR = __RBIT(inputlength >> 32);
-            hcryp->Instance->DR = __RBIT(inputlength);
+            hcryp->Instance->DR = __RMSM8916_BIT(headerlength >> 32);
+            hcryp->Instance->DR = __RMSM8916_BIT(headerlength);
+            hcryp->Instance->DR = __RMSM8916_BIT(inputlength >> 32);
+            hcryp->Instance->DR = __RMSM8916_BIT(inputlength);
         } else if (hcryp->Init.DataType == CRYP_DATATYPE_8B) {
             hcryp->Instance->DR = __REV(headerlength >> 32);
             hcryp->Instance->DR = __REV(headerlength);

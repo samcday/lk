@@ -760,7 +760,7 @@ uint32_t HAL_SMARTCARD_GetError(SMARTCARD_HandleTypeDef *hsc);
 #define IS_SMARTCARD_MODE(__MODE__) ((((__MODE__) & (uint32_t)0xFFF3) == 0x00) && ((__MODE__) != (uint32_t)0x00))
 #define IS_SMARTCARD_POLARITY(__CPOL__) (((__CPOL__) == SMARTCARD_POLARITY_LOW) || ((__CPOL__) == SMARTCARD_POLARITY_HIGH))
 #define IS_SMARTCARD_PHASE(__CPHA__) (((__CPHA__) == SMARTCARD_PHASE_1EDGE) || ((__CPHA__) == SMARTCARD_PHASE_2EDGE))
-#define IS_SMARTCARD_LASTBIT(__LASTBIT__) (((__LASTBIT__) == SMARTCARD_LASTBIT_DISABLE) || \
+#define IS_SMARTCARD_LASTMSM8916_BIT(__LASTBIT__) (((__LASTBIT__) == SMARTCARD_LASTBIT_DISABLE) || \
                                            ((__LASTBIT__) == SMARTCARD_LASTBIT_ENABLE))
 #define IS_SMARTCARD_ONE_BIT_SAMPLE(__ONEBIT__) (((__ONEBIT__) == SMARTCARD_ONE_BIT_SAMPLE_DISABLE) || \
                                                   ((__ONEBIT__) == SMARTCARD_ONE_BIT_SAMPLE_ENABLE))

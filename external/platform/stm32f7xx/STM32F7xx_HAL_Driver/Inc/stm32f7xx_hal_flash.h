@@ -194,7 +194,7 @@ typedef struct {
   * @retval FLASH Latency
   *          The value of this parameter depend on device used within the same series
   */
-#define __HAL_FLASH_GET_LATENCY()     (READ_BIT((FLASH->ACR), FLASH_ACR_LATENCY))
+#define __HAL_FLASH_GET_LATENCY()     (READ_MSM8916_BIT((FLASH->ACR), FLASH_ACR_LATENCY))
 
 /**
   * @brief  Enable the FLASH prefetch buffer.

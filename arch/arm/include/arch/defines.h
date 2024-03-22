@@ -41,5 +41,9 @@
 #error unknown cpu
 #endif
 
+// +MSM8916 HACK+
+#define IS_CACHE_LINE_ALIGNED(addr)  !((uint32_t) (addr) & (CACHE_LINE - 1))
+// -MSM8916 HACK-
+
 #endif
 

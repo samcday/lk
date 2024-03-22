@@ -1534,7 +1534,7 @@ static HAL_StatusTypeDef USART_SetConfig(USART_HandleTypeDef *husart)
     /* Check the parameters */
     assert_param(IS_USART_POLARITY(husart->Init.CLKPolarity));
     assert_param(IS_USART_PHASE(husart->Init.CLKPhase));
-    assert_param(IS_USART_LASTBIT(husart->Init.CLKLastBit));
+    assert_param(IS_USART_LASTMSM8916_BIT(husart->Init.CLKLastBit));
     assert_param(IS_USART_BAUDRATE(husart->Init.BaudRate));
     assert_param(IS_USART_WORD_LENGTH(husart->Init.WordLength));
     assert_param(IS_USART_STOPBITS(husart->Init.StopBits));

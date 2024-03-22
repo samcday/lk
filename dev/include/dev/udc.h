@@ -90,3 +90,70 @@ int udc_register_gadget(udc_gadget_t *gadget);
 int udc_start(void);
 int udc_stop(void);
 
+
+// +MSM8916 HACK+
+#define UDC_TYPE_BULK_IN	1
+#define UDC_TYPE_BULK_OUT	2
+#define UDC_TYPE_INTR_IN	3
+#define UDC_TYPE_INTR_OUT	4
+
+/* these should probably go elsewhere */
+#define GET_STATUS           0
+#define CLEAR_FEATURE        1
+#define SET_FEATURE          3
+#define SET_ADDRESS          5
+#define GET_DESCRIPTOR       6
+#define SET_DESCRIPTOR       7
+#define GET_CONFIGURATION    8
+#define SET_CONFIGURATION    9
+#define GET_INTERFACE        10
+#define SET_INTERFACE        11
+#define SYNCH_FRAME          12
+#define SET_SEL              48
+#define SET_ISOCH_DELAY      49
+
+#define TYPE_DEVICE          1
+#define TYPE_CONFIGURATION   2
+#define TYPE_STRING          3
+#define TYPE_INTERFACE       4
+#define TYPE_ENDPOINT        5
+#define TYPE_DEVICE_QUALIFIER          6
+#define TYPE_OTHER_SPEED_CONFIG        7
+#define TYPE_BOS             15
+#define TYPE_DEVICE_CAP      16
+#define TYPE_SS_EP_COMP      48
+
+#define DEVICE_READ          0x80
+#define DEVICE_WRITE         0x00
+#define INTERFACE_READ       0x81
+#define INTERFACE_WRITE      0x01
+#define ENDPOINT_READ        0x82
+#define ENDPOINT_WRITE       0x02
+#define TEST_MODE            0x02
+
+#define TEST_J               0x0100
+#define TEST_K               0x0200
+#define TEST_SE0_NAK		 0x0300
+#define TEST_PACKET          0x0400
+#define TEST_FORCE_ENABLE    0x0500
+
+#define PORTSC_PTC           (0xF << 16)
+#define PORTSC_PTC_SE0_NAK	 (0x03 << 16)
+#define PORTSC_PTC_TST_PKT   (0x4 << 16)
+
+#define USB_EP_NUM_MASK      0x0f
+#define USB_EP_DIR_MASK      0x80
+#define USB_EP_DIR_IN        0x80
+
+struct setup_packet {
+	unsigned char type;
+	unsigned char request;
+	unsigned short value;
+	unsigned short index;
+	unsigned short length;
+} __attribute__ ((packed));
+
+unsigned ulpi_read(unsigned reg);
+void ulpi_write(unsigned val, unsigned reg);
+
+// -MSM8916 HACK-

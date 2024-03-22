@@ -28,7 +28,7 @@ static void spifi_write_enable(void) {
 
 static void spifi_wait_busy(void) {
     while (readl(SPIFI_STAT) & STAT_CMD) ;
-    writel(CMD_POLLBIT(0) | CMD_POLLCLR | CMD_POLL |
+    writel(CMD_POLLMSM8916_BIT(0) | CMD_POLLCLR | CMD_POLL |
            CMD_FF_SERIAL | CMD_FR_OP | CMD_OPCODE(CMD_READ_STATUS),
            SPIFI_CMD);
     while (readl(SPIFI_STAT) & STAT_CMD) ;

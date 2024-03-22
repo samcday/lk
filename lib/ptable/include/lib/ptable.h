@@ -30,3 +30,9 @@ status_t ptable_create_default(const char *bdev_name, uint64_t offset) __NONNULL
 status_t ptable_add(const char *name, uint64_t min_len, uint32_t flags) __NONNULL();
 status_t ptable_remove(const char *name) __NONNULL();
 void     ptable_dump(void);
+
+
+// +MSM8916 HACK+
+#define TYPE_MODEM_PARTITION	1
+#define PERM_WRITEABLE		1
+// -MSM8916 HACK-

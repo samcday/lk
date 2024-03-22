@@ -412,7 +412,7 @@ typedef struct __SPI_HandleTypeDef
   *            @arg SPI_IT_ERR: Error interrupt enable
   * @retval None
   */
-#define __HAL_SPI_ENABLE_IT(__HANDLE__, __INTERRUPT__)   SET_BIT((__HANDLE__)->Instance->CR2, (__INTERRUPT__))
+#define __HAL_SPI_ENABLE_IT(__HANDLE__, __INTERRUPT__)   SET_MSM8916_BIT((__HANDLE__)->Instance->CR2, (__INTERRUPT__))
 
 /** @brief  Disable the specified SPI interrupts.
   * @param  __HANDLE__ specifies the SPI handle.
@@ -424,7 +424,7 @@ typedef struct __SPI_HandleTypeDef
   *            @arg SPI_IT_ERR: Error interrupt enable
   * @retval None
   */
-#define __HAL_SPI_DISABLE_IT(__HANDLE__, __INTERRUPT__)  CLEAR_BIT((__HANDLE__)->Instance->CR2, (__INTERRUPT__))
+#define __HAL_SPI_DISABLE_IT(__HANDLE__, __INTERRUPT__)  CLEAR_MSM8916_BIT((__HANDLE__)->Instance->CR2, (__INTERRUPT__))
 
 /** @brief  Check whether the specified SPI interrupt source is enabled or not.
   * @param  __HANDLE__ specifies the SPI Handle.
@@ -472,7 +472,7 @@ typedef struct __SPI_HandleTypeDef
   do{                                                    \
     __IO uint32_t tmpreg_modf = 0x00U;                   \
     tmpreg_modf = (__HANDLE__)->Instance->SR;            \
-    CLEAR_BIT((__HANDLE__)->Instance->CR1, SPI_CR1_SPE); \
+    CLEAR_MSM8916_BIT((__HANDLE__)->Instance->CR1, SPI_CR1_SPE); \
     UNUSED(tmpreg_modf);                                 \
   } while(0U)
 
@@ -506,14 +506,14 @@ typedef struct __SPI_HandleTypeDef
   *         This parameter can be SPI where x: 1, 2, or 3 to select the SPI peripheral.
   * @retval None
   */
-#define __HAL_SPI_ENABLE(__HANDLE__)  SET_BIT((__HANDLE__)->Instance->CR1, SPI_CR1_SPE)
+#define __HAL_SPI_ENABLE(__HANDLE__)  SET_MSM8916_BIT((__HANDLE__)->Instance->CR1, SPI_CR1_SPE)
 
 /** @brief  Disable the SPI peripheral.
   * @param  __HANDLE__ specifies the SPI Handle.
   *         This parameter can be SPI where x: 1, 2, or 3 to select the SPI peripheral.
   * @retval None
   */
-#define __HAL_SPI_DISABLE(__HANDLE__) CLEAR_BIT((__HANDLE__)->Instance->CR1, SPI_CR1_SPE)
+#define __HAL_SPI_DISABLE(__HANDLE__) CLEAR_MSM8916_BIT((__HANDLE__)->Instance->CR1, SPI_CR1_SPE)
 
 /**
   * @}
@@ -529,22 +529,22 @@ typedef struct __SPI_HandleTypeDef
   *         This parameter can be SPI where x: 1, 2, or 3 to select the SPI peripheral.
   * @retval None
   */
-#define SPI_1LINE_TX(__HANDLE__)  SET_BIT((__HANDLE__)->Instance->CR1, SPI_CR1_BIDIOE)
+#define SPI_1LINE_TX(__HANDLE__)  SET_MSM8916_BIT((__HANDLE__)->Instance->CR1, SPI_CR1_BIDIOE)
 
 /** @brief  Set the SPI receive-only mode.
   * @param  __HANDLE__ specifies the SPI Handle.
   *         This parameter can be SPI where x: 1, 2, or 3 to select the SPI peripheral.
   * @retval None
   */
-#define SPI_1LINE_RX(__HANDLE__)  CLEAR_BIT((__HANDLE__)->Instance->CR1, SPI_CR1_BIDIOE)
+#define SPI_1LINE_RX(__HANDLE__)  CLEAR_MSM8916_BIT((__HANDLE__)->Instance->CR1, SPI_CR1_BIDIOE)
 
 /** @brief  Reset the CRC calculation of the SPI.
   * @param  __HANDLE__ specifies the SPI Handle.
   *         This parameter can be SPI where x: 1, 2, or 3 to select the SPI peripheral.
   * @retval None
   */
-#define SPI_RESET_CRC(__HANDLE__) do{CLEAR_BIT((__HANDLE__)->Instance->CR1, SPI_CR1_CRCEN);\
-                                       SET_BIT((__HANDLE__)->Instance->CR1, SPI_CR1_CRCEN);}while(0U)
+#define SPI_RESET_CRC(__HANDLE__) do{CLEAR_MSM8916_BIT((__HANDLE__)->Instance->CR1, SPI_CR1_CRCEN);\
+                                       SET_MSM8916_BIT((__HANDLE__)->Instance->CR1, SPI_CR1_CRCEN);}while(0U)
 
 #define IS_SPI_MODE(MODE) (((MODE) == SPI_MODE_SLAVE) || \
                            ((MODE) == SPI_MODE_MASTER))
@@ -594,7 +594,7 @@ typedef struct __SPI_HandleTypeDef
                                               ((PRESCALER) == SPI_BAUDRATEPRESCALER_128) || \
                                               ((PRESCALER) == SPI_BAUDRATEPRESCALER_256))
 
-#define IS_SPI_FIRST_BIT(BIT) (((BIT) == SPI_FIRSTBIT_MSB) || \
+#define IS_SPI_FIRST_MSM8916_BIT(BIT) (((BIT) == SPI_FIRSTBIT_MSB) || \
                                ((BIT) == SPI_FIRSTBIT_LSB))
 
 #define IS_SPI_TIMODE(MODE) (((MODE) == SPI_TIMODE_DISABLE) || \

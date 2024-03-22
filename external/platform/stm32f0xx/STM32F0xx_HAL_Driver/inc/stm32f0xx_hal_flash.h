@@ -206,7 +206,7 @@ typedef struct
   * @retval FLASH Latency                   
   *         The value of this parameter depend on device used within the same series
   */ 
-#define __HAL_FLASH_GET_LATENCY()     (READ_BIT((FLASH->ACR), FLASH_ACR_LATENCY))
+#define __HAL_FLASH_GET_LATENCY()     (READ_MSM8916_BIT((FLASH->ACR), FLASH_ACR_LATENCY))
 
 /**
   * @}
@@ -245,7 +245,7 @@ typedef struct
   *     @arg @ref FLASH_IT_ERR Error Interrupt    
   * @retval none
   */  
-#define __HAL_FLASH_ENABLE_IT(__INTERRUPT__)  SET_BIT((FLASH->CR), (__INTERRUPT__))
+#define __HAL_FLASH_ENABLE_IT(__INTERRUPT__)  SET_MSM8916_BIT((FLASH->CR), (__INTERRUPT__))
 
 /**
   * @brief  Disable the specified FLASH interrupt.
@@ -255,7 +255,7 @@ typedef struct
   *     @arg @ref FLASH_IT_ERR Error Interrupt    
   * @retval none
   */  
-#define __HAL_FLASH_DISABLE_IT(__INTERRUPT__)  CLEAR_BIT((FLASH->CR), (uint32_t)(__INTERRUPT__))
+#define __HAL_FLASH_DISABLE_IT(__INTERRUPT__)  CLEAR_MSM8916_BIT((FLASH->CR), (uint32_t)(__INTERRUPT__))
 
 /**
   * @brief  Get the specified FLASH flag status. 

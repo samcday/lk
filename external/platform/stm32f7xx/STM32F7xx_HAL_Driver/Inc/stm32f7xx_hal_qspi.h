@@ -432,13 +432,13 @@ typedef struct {
   * @param  __HANDLE__: specifies the QSPI Handle.
   * @retval None
   */
-#define __HAL_QSPI_ENABLE(__HANDLE__)                       SET_BIT((__HANDLE__)->Instance->CR, QUADSPI_CR_EN)
+#define __HAL_QSPI_ENABLE(__HANDLE__)                       SET_MSM8916_BIT((__HANDLE__)->Instance->CR, QUADSPI_CR_EN)
 
 /** @brief  Disable QSPI
   * @param  __HANDLE__: specifies the QSPI Handle.
   * @retval None
   */
-#define __HAL_QSPI_DISABLE(__HANDLE__)                      CLEAR_BIT((__HANDLE__)->Instance->CR, QUADSPI_CR_EN)
+#define __HAL_QSPI_DISABLE(__HANDLE__)                      CLEAR_MSM8916_BIT((__HANDLE__)->Instance->CR, QUADSPI_CR_EN)
 
 /** @brief  Enables the specified QSPI interrupt.
   * @param  __HANDLE__: specifies the QSPI Handle.
@@ -451,7 +451,7 @@ typedef struct {
   *            @arg QSPI_IT_TE: QSPI Transfer error interrupt
   * @retval None
   */
-#define __HAL_QSPI_ENABLE_IT(__HANDLE__, __INTERRUPT__)     SET_BIT((__HANDLE__)->Instance->CR, (__INTERRUPT__))
+#define __HAL_QSPI_ENABLE_IT(__HANDLE__, __INTERRUPT__)     SET_MSM8916_BIT((__HANDLE__)->Instance->CR, (__INTERRUPT__))
 
 
 /** @brief  Disables the specified QSPI interrupt.
@@ -465,7 +465,7 @@ typedef struct {
   *            @arg QSPI_IT_TE: QSPI Transfer error interrupt
   * @retval None
   */
-#define __HAL_QSPI_DISABLE_IT(__HANDLE__, __INTERRUPT__)    CLEAR_BIT((__HANDLE__)->Instance->CR, (__INTERRUPT__))
+#define __HAL_QSPI_DISABLE_IT(__HANDLE__, __INTERRUPT__)    CLEAR_MSM8916_BIT((__HANDLE__)->Instance->CR, (__INTERRUPT__))
 
 /** @brief  Checks whether the specified QSPI interrupt source is enabled.
   * @param  __HANDLE__: specifies the QSPI Handle.
@@ -478,7 +478,7 @@ typedef struct {
   *            @arg QSPI_IT_TE: QSPI Transfer error interrupt
   * @retval The new state of __INTERRUPT__ (TRUE or FALSE).
   */
-#define __HAL_QSPI_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__) (READ_BIT((__HANDLE__)->Instance->CR, (__INTERRUPT__)) == (__INTERRUPT__))
+#define __HAL_QSPI_GET_IT_SOURCE(__HANDLE__, __INTERRUPT__) (READ_MSM8916_BIT((__HANDLE__)->Instance->CR, (__INTERRUPT__)) == (__INTERRUPT__))
 
 /**
   * @brief  Get the selected QSPI's flag status.
@@ -493,7 +493,7 @@ typedef struct {
   *            @arg QSPI_FLAG_TE:   QSPI Transfer error flag
   * @retval None
   */
-#define __HAL_QSPI_GET_FLAG(__HANDLE__, __FLAG__)           (READ_BIT((__HANDLE__)->Instance->SR, (__FLAG__)) != 0)
+#define __HAL_QSPI_GET_FLAG(__HANDLE__, __FLAG__)           (READ_MSM8916_BIT((__HANDLE__)->Instance->SR, (__FLAG__)) != 0)
 
 /** @brief  Clears the specified QSPI's flag status.
   * @param  __HANDLE__: specifies the QSPI Handle.

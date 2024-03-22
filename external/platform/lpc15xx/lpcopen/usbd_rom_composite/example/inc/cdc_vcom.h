@@ -44,12 +44,12 @@ extern "C"
  */
 
 #define VCOM_RX_BUF_SZ      512
-#define VCOM_TX_CONNECTED   _BIT(8)		/* connection state is for both RX/Tx */
-#define VCOM_TX_BUSY        _BIT(0)
-#define VCOM_RX_DONE        _BIT(0)
-#define VCOM_RX_BUF_FULL    _BIT(1)
-#define VCOM_RX_BUF_QUEUED  _BIT(2)
-#define VCOM_RX_DB_QUEUED   _BIT(3)
+#define VCOM_TX_CONNECTED   _MSM8916_BIT(8)		/* connection state is for both RX/Tx */
+#define VCOM_TX_BUSY        _MSM8916_BIT(0)
+#define VCOM_RX_DONE        _MSM8916_BIT(0)
+#define VCOM_RX_BUF_FULL    _MSM8916_BIT(1)
+#define VCOM_RX_BUF_QUEUED  _MSM8916_BIT(2)
+#define VCOM_RX_DB_QUEUED   _MSM8916_BIT(3)
 
 /**
  * Structure containing Virtual Comm port control data

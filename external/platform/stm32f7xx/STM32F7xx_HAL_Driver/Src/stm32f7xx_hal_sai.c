@@ -321,7 +321,7 @@ HAL_StatusTypeDef HAL_SAI_Init(SAI_HandleTypeDef *hsai)
     assert_param(IS_SAI_BLOCK_MODE(hsai->Init.AudioMode));
     assert_param(IS_SAI_BLOCK_SYNCEXT(hsai->Init.SynchroExt));
     assert_param(IS_SAI_BLOCK_DATASIZE(hsai->Init.DataSize));
-    assert_param(IS_SAI_BLOCK_FIRST_BIT(hsai->Init.FirstBit));
+    assert_param(IS_SAI_BLOCK_FIRST_MSM8916_BIT(hsai->Init.FirstBit));
     assert_param(IS_SAI_BLOCK_CLOCK_STROBING(hsai->Init.ClockStrobing));
     assert_param(IS_SAI_BLOCK_SYNCHRO(hsai->Init.Synchro));
     assert_param(IS_SAI_BLOCK_OUTPUT_DRIVE(hsai->Init.OutputDrive));

@@ -506,7 +506,7 @@ typedef struct {
   * @param  __HANDLE__: specifies the CEC Handle.
   * @retval none
   */
-#define __HAL_CEC_CLEAR_OAR(__HANDLE__)   CLEAR_BIT((__HANDLE__)->Instance->CFGR, CEC_CFGR_OAR)
+#define __HAL_CEC_CLEAR_OAR(__HANDLE__)   CLEAR_MSM8916_BIT((__HANDLE__)->Instance->CFGR, CEC_CFGR_OAR)
 
 /** @brief  Set OAR register (without resetting previously set address in case of multi-address mode)
   *          To reset OAR, __HAL_CEC_CLEAR_OAR() needs to be called beforehand
@@ -514,7 +514,7 @@ typedef struct {
   * @param  __ADDRESS__: Own Address value (CEC logical address is identified by bit position)
   * @retval none
   */
-#define __HAL_CEC_SET_OAR(__HANDLE__,__ADDRESS__)   SET_BIT((__HANDLE__)->Instance->CFGR, (__ADDRESS__)<< CEC_CFGR_OAR_LSB_POS)
+#define __HAL_CEC_SET_OAR(__HANDLE__,__ADDRESS__)   SET_MSM8916_BIT((__HANDLE__)->Instance->CFGR, (__ADDRESS__)<< CEC_CFGR_OAR_LSB_POS)
 
 /**
   * @}

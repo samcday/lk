@@ -289,7 +289,7 @@ void SPI_Init(SPI_TypeDef* SPIx, SPI_InitTypeDef* SPI_InitStruct)
   assert_param(IS_SPI_CPHA(SPI_InitStruct->SPI_CPHA));
   assert_param(IS_SPI_NSS(SPI_InitStruct->SPI_NSS));
   assert_param(IS_SPI_BAUDRATE_PRESCALER(SPI_InitStruct->SPI_BaudRatePrescaler));
-  assert_param(IS_SPI_FIRST_BIT(SPI_InitStruct->SPI_FirstBit));
+  assert_param(IS_SPI_FIRST_MSM8916_BIT(SPI_InitStruct->SPI_FirstBit));
   assert_param(IS_SPI_CRC_POLYNOMIAL(SPI_InitStruct->SPI_CRCPolynomial));
 
 /*---------------------------- SPIx CR1 Configuration ------------------------*/

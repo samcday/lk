@@ -20,3 +20,10 @@ bool arm_dcc_read_available(void);
 ssize_t arm_dcc_read(uint32_t *buf, size_t len, lk_time_t timeout);
 ssize_t arm_dcc_write(const uint32_t *buf, size_t len, lk_time_t timeout);
 
+
+// +MSM8916 HACK+
+/* returns < 0 if no data available */
+int dcc_getc(void);
+/* returns < 0 if output register was already full */
+int dcc_putc(unsigned c);
+// -MSM8916 HACK-

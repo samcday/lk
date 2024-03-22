@@ -24,3 +24,8 @@
 #define readl(a) (*REG32(a))
 #define writeb(v, a) (*REG8(a) = (v))
 #define readb(a) (*REG8(a))
+
+// +MSM8916 HACK+
+#define writehw(v, a) (*REG16(a) = (v))
+#define readhw(a) (*REG16(a))
+// -MSM8916 HACK-

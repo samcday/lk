@@ -791,7 +791,7 @@ static void saadc_event_limits_handle(uint8_t limits_activated, nrf_saadc_limit_
 {
     while (limits_activated)
     {
-        uint8_t channel = __CLZ(__RBIT((uint32_t)limits_activated));
+        uint8_t channel = __CLZ(__RMSM8916_BIT((uint32_t)limits_activated));
         limits_activated &= ~(1 << channel);
 
         nrf_saadc_event_t event = nrf_saadc_limit_event_get(channel, limit_type);

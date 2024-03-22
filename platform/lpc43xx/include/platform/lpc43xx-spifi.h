@@ -31,7 +31,7 @@
 
 #define CMD_DATALEN(n)      ((n) & 0x3FFF)
 #define CMD_POLL        (1 << 14) // if set, read byte repeatedly until condition
-#define CMD_POLLBIT(n)      ((n) & 7) // which bit# to check
+#define CMD_POLLMSM8916_BIT(n)      ((n) & 7) // which bit# to check
 #define CMD_POLLSET     (1 << 3)  // condition is bit# set
 #define CMD_POLLCLR     (0 << 3)  // condition is bit# clear
 #define CMD_DOUT        (1 << 15) // 1=data phase output, 0=data phase input

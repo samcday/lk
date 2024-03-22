@@ -31,3 +31,7 @@ void     platform_stop_timer(void);
 
 __END_CDECLS
 
+// +MSM8916 HACK+
+void mdelay(unsigned msecs);
+void udelay(unsigned usecs);
+// -MSM8916 HACK-

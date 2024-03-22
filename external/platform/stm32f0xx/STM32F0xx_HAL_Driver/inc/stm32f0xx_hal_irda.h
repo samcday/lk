@@ -413,8 +413,8 @@ typedef enum
   */
 #define __HAL_IRDA_FLUSH_DRREGISTER(__HANDLE__)                            \
     do{                                                                    \
-         SET_BIT((__HANDLE__)->Instance->RQR, IRDA_RXDATA_FLUSH_REQUEST); \
-         SET_BIT((__HANDLE__)->Instance->RQR, IRDA_TXDATA_FLUSH_REQUEST); \
+         SET_MSM8916_BIT((__HANDLE__)->Instance->RQR, IRDA_RXDATA_FLUSH_REQUEST); \
+         SET_MSM8916_BIT((__HANDLE__)->Instance->RQR, IRDA_TXDATA_FLUSH_REQUEST); \
       } while(0)
 
 /** @brief  Clear the specified IRDA pending flag.

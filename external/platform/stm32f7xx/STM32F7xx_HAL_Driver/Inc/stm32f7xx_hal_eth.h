@@ -1662,7 +1662,7 @@ TDES7 |                         Transmit Time Stamp High [31:0]                 
   * @param  __HANDLE__: ETH Handle
   * @retval None
   */
-#define __HAL_ETH_DMARXDESC_SET_OWN_BIT(__HANDLE__)                           ((__HANDLE__)->RxDesc->Status |= ETH_DMARXDESC_OWN)
+#define __HAL_ETH_DMARXDESC_SET_OWN_MSM8916_BIT(__HANDLE__)                           ((__HANDLE__)->RxDesc->Status |= ETH_DMARXDESC_OWN)
 
 /**
   * @brief  Returns the specified ETHERNET DMA Tx Desc collision count.
@@ -1676,7 +1676,7 @@ TDES7 |                         Transmit Time Stamp High [31:0]                 
   * @param  __HANDLE__: ETH Handle
   * @retval None
   */
-#define __HAL_ETH_DMATXDESC_SET_OWN_BIT(__HANDLE__)                       ((__HANDLE__)->TxDesc->Status |= ETH_DMATXDESC_OWN)
+#define __HAL_ETH_DMATXDESC_SET_OWN_MSM8916_BIT(__HANDLE__)                       ((__HANDLE__)->TxDesc->Status |= ETH_DMATXDESC_OWN)
 
 /**
   * @brief  Enables the specified DMA Tx Desc Transmit interrupt.

@@ -7,7 +7,7 @@ MODULE_DEPS += \
 	lib/bootargs \
 	lib/bootimage \
 	lib/cbuf \
-	lib/ptable \
+	lib/ptable_android \
 	lib/sysparam
 
 MODULE_SRCS += \

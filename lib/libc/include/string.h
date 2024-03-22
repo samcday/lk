@@ -49,3 +49,7 @@ size_t strnlen(char const *s, size_t count) __PURE;
 
 __END_CDECLS
 
+// +MSM8916 HACK+
+char       *strtok_r(char *s, const char *delim, char **last);
+size_t memscpy (void *, size_t, void const *, size_t);
+// -MSM8916 HACK-

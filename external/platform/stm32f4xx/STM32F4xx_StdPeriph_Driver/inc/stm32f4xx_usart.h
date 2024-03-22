@@ -227,7 +227,7 @@ typedef struct
 
 #define USART_LastBit_Disable                ((uint16_t)0x0000)
 #define USART_LastBit_Enable                 ((uint16_t)0x0100)
-#define IS_USART_LASTBIT(LASTBIT) (((LASTBIT) == USART_LastBit_Disable) || \
+#define IS_USART_LASTMSM8916_BIT(LASTBIT) (((LASTBIT) == USART_LastBit_Disable) || \
                                    ((LASTBIT) == USART_LastBit_Enable))
 /**
   * @}

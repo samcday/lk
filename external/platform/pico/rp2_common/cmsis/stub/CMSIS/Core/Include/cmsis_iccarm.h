@@ -539,7 +539,7 @@ __packed struct  __iar_u32 { uint32_t v; };
       return count;
     }
 
-    __STATIC_INLINE uint32_t __RBIT(uint32_t v)
+    __STATIC_INLINE uint32_t __RMSM8916_BIT(uint32_t v)
     {
       uint8_t sc = 31U;
       uint32_t r = v;

@@ -226,7 +226,7 @@ typedef struct
 
 #define SAI_FirstBit_MSB                  ((uint32_t)0x00000000)
 #define SAI_FirstBit_LSB                  ((uint32_t)SAI_xCR1_LSBFIRST)
-#define IS_SAI_BLOCK_FIRST_BIT(BIT) (((BIT) == SAI_FirstBit_MSB) || \
+#define IS_SAI_BLOCK_FIRST_MSM8916_BIT(BIT) (((BIT) == SAI_FirstBit_MSB) || \
                                      ((BIT) == SAI_FirstBit_LSB))
 /**
   * @}

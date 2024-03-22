@@ -61,3 +61,7 @@ typedef uint16_t u_int16_t;
 typedef uint32_t u_int32_t;
 typedef uint64_t u_int64_t;
 
+// +MSM8916 HACK+
+#define ARRAY_SIZE(x) (sizeof(x)/sizeof((x)[0]))
+#include <stdbool.h>
+// -MSM8916 HACK-

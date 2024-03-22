@@ -593,7 +593,7 @@ typedef struct __SPI_HandleTypeDef {
                                               ((PRESCALER) == SPI_BAUDRATEPRESCALER_128) || \
                                               ((PRESCALER) == SPI_BAUDRATEPRESCALER_256))
 
-#define IS_SPI_FIRST_BIT(BIT) (((BIT) == SPI_FIRSTBIT_MSB) || \
+#define IS_SPI_FIRST_MSM8916_BIT(BIT) (((BIT) == SPI_FIRSTBIT_MSB) || \
                                ((BIT) == SPI_FIRSTBIT_LSB))
 
 #define IS_SPI_TIMODE(MODE) (((MODE) == SPI_TIMODE_DISABLE) || \

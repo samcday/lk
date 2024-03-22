@@ -226,7 +226,7 @@ typedef struct
 
 #define SPI_FirstBit_MSB                ((uint16_t)0x0000)
 #define SPI_FirstBit_LSB                ((uint16_t)0x0080)
-#define IS_SPI_FIRST_BIT(BIT) (((BIT) == SPI_FirstBit_MSB) || \
+#define IS_SPI_FIRST_MSM8916_BIT(BIT) (((BIT) == SPI_FirstBit_MSB) || \
                                ((BIT) == SPI_FirstBit_LSB))
 /**
   * @}

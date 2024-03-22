@@ -258,7 +258,7 @@ __attribute__((section(".revsh_text"))) __STATIC_INLINE __ASM int16_t __REVSH(in
      (defined (__ARM_ARCH_7EM__) && (__ARM_ARCH_7EM__ == 1))     )
   #define __RBIT                          __rbit
 #else
-__attribute__((always_inline)) __STATIC_INLINE uint32_t __RBIT(uint32_t value)
+__attribute__((always_inline)) __STATIC_INLINE uint32_t __RMSM8916_BIT(uint32_t value)
 {
   uint32_t result;
   uint32_t s = (4U /*sizeof(v)*/ * 8U) - 1U; /* extra shift needed at end */

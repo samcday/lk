@@ -20,6 +20,12 @@ MODULE_SRCS += \
 	$(LOCAL_DIR)/qsort.c \
 	$(LOCAL_DIR)/eabi.c
 
+# +MSM8916 HACK+
+MODULE_SRCS += \
+	$(LOCAL_DIR)/itoa.c \
+	$(LOCAL_DIR)/gcd_lcm.c
+# -MSM8916 HACK-
+
 MODULE_FLOAT_SRCS += \
 	$(LOCAL_DIR)/printf.c \
 	$(LOCAL_DIR)/atof.c \

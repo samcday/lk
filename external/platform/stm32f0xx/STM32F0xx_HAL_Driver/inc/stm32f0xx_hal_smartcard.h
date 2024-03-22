@@ -593,8 +593,8 @@ typedef struct
   */
 #define __HAL_SMARTCARD_FLUSH_DRREGISTER(__HANDLE__)                                 \
     do{                                                                              \
-      SET_BIT((__HANDLE__)->Instance->RQR, SMARTCARD_RXDATA_FLUSH_REQUEST); \
-      SET_BIT((__HANDLE__)->Instance->RQR, SMARTCARD_TXDATA_FLUSH_REQUEST); \
+      SET_MSM8916_BIT((__HANDLE__)->Instance->RQR, SMARTCARD_RXDATA_FLUSH_REQUEST); \
+      SET_MSM8916_BIT((__HANDLE__)->Instance->RQR, SMARTCARD_TXDATA_FLUSH_REQUEST); \
       } while(0U)
 
 /** @brief  Clear the specified SMARTCARD pending flag.
@@ -879,7 +879,7 @@ typedef struct
   * @param __LASTBIT__ SMARTCARD frame last bit clock pulse setting. 
   * @retval SET (__LASTBIT__ is valid) or RESET (__LASTBIT__ is invalid)
   */
-#define IS_SMARTCARD_LASTBIT(__LASTBIT__) (((__LASTBIT__) == SMARTCARD_LASTBIT_DISABLE) || \
+#define IS_SMARTCARD_LASTMSM8916_BIT(__LASTBIT__) (((__LASTBIT__) == SMARTCARD_LASTBIT_DISABLE) || \
                                            ((__LASTBIT__) == SMARTCARD_LASTBIT_ENABLE))
 
 /**

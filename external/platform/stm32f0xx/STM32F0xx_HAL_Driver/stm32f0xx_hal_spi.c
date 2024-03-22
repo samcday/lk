@@ -206,14 +206,14 @@ static HAL_StatusTypeDef SPI_WaitFlagStateUntilTimeout(SPI_HandleTypeDef *hspi, 
                                                        uint32_t Timeout, uint32_t Tickstart);
 static HAL_StatusTypeDef SPI_WaitFifoStateUntilTimeout(SPI_HandleTypeDef *hspi, uint32_t Fifo, uint32_t State,
                                                        uint32_t Timeout, uint32_t Tickstart);
-static void SPI_TxISR_8BIT(struct __SPI_HandleTypeDef *hspi);
-static void SPI_TxISR_16BIT(struct __SPI_HandleTypeDef *hspi);
-static void SPI_RxISR_8BIT(struct __SPI_HandleTypeDef *hspi);
-static void SPI_RxISR_16BIT(struct __SPI_HandleTypeDef *hspi);
-static void SPI_2linesRxISR_8BIT(struct __SPI_HandleTypeDef *hspi);
-static void SPI_2linesTxISR_8BIT(struct __SPI_HandleTypeDef *hspi);
-static void SPI_2linesTxISR_16BIT(struct __SPI_HandleTypeDef *hspi);
-static void SPI_2linesRxISR_16BIT(struct __SPI_HandleTypeDef *hspi);
+static void SPI_TxISR_8MSM8916_BIT(struct __SPI_HandleTypeDef *hspi);
+static void SPI_TxISR_16MSM8916_BIT(struct __SPI_HandleTypeDef *hspi);
+static void SPI_RxISR_8MSM8916_BIT(struct __SPI_HandleTypeDef *hspi);
+static void SPI_RxISR_16MSM8916_BIT(struct __SPI_HandleTypeDef *hspi);
+static void SPI_2linesRxISR_8MSM8916_BIT(struct __SPI_HandleTypeDef *hspi);
+static void SPI_2linesTxISR_8MSM8916_BIT(struct __SPI_HandleTypeDef *hspi);
+static void SPI_2linesTxISR_16MSM8916_BIT(struct __SPI_HandleTypeDef *hspi);
+static void SPI_2linesRxISR_16MSM8916_BIT(struct __SPI_HandleTypeDef *hspi);
 #if (USE_SPI_CRC != 0U)
 static void SPI_RxISR_8BITCRC(struct __SPI_HandleTypeDef *hspi);
 static void SPI_RxISR_16BITCRC(struct __SPI_HandleTypeDef *hspi);
@@ -296,7 +296,7 @@ HAL_StatusTypeDef HAL_SPI_Init(SPI_HandleTypeDef *hspi)
   assert_param(IS_SPI_NSS(hspi->Init.NSS));
   assert_param(IS_SPI_NSSP(hspi->Init.NSSPMode));
   assert_param(IS_SPI_BAUDRATE_PRESCALER(hspi->Init.BaudRatePrescaler));
-  assert_param(IS_SPI_FIRST_BIT(hspi->Init.FirstBit));
+  assert_param(IS_SPI_FIRST_MSM8916_BIT(hspi->Init.FirstBit));
   assert_param(IS_SPI_TIMODE(hspi->Init.TIMode));
   if (hspi->Init.TIMode == SPI_TIMODE_DISABLE)
   {
@@ -3104,7 +3104,7 @@ static void SPI_DMARxAbortCallback(DMA_HandleTypeDef *hdma)
   *               the configuration information for SPI module.
   * @retval None
   */
-static void SPI_2linesRxISR_8BIT(struct __SPI_HandleTypeDef *hspi)
+static void SPI_2linesRxISR_8MSM8916_BIT(struct __SPI_HandleTypeDef *hspi)
 {
   /* Receive data in packing mode */
   if (hspi->RxXferCount > 1U)
@@ -3186,7 +3186,7 @@ static void SPI_2linesRxISR_8BITCRC(struct __SPI_HandleTypeDef *hspi)
   *               the configuration information for SPI module.
   * @retval None
   */
-static void SPI_2linesTxISR_8BIT(struct __SPI_HandleTypeDef *hspi)
+static void SPI_2linesTxISR_8MSM8916_BIT(struct __SPI_HandleTypeDef *hspi)
 {
   /* Transmit data in packing Bit mode */
   if (hspi->TxXferCount >= 2U)
@@ -3232,7 +3232,7 @@ static void SPI_2linesTxISR_8BIT(struct __SPI_HandleTypeDef *hspi)
   *               the configuration information for SPI module.
   * @retval None
   */
-static void SPI_2linesRxISR_16BIT(struct __SPI_HandleTypeDef *hspi)
+static void SPI_2linesRxISR_16MSM8916_BIT(struct __SPI_HandleTypeDef *hspi)
 {
   /* Receive data in 16 Bit mode */
   *((uint16_t *)hspi->pRxBuffPtr) = hspi->Instance->DR;
@@ -3290,7 +3290,7 @@ static void SPI_2linesRxISR_16BITCRC(struct __SPI_HandleTypeDef *hspi)
   *               the configuration information for SPI module.
   * @retval None
   */
-static void SPI_2linesTxISR_16BIT(struct __SPI_HandleTypeDef *hspi)
+static void SPI_2linesTxISR_16MSM8916_BIT(struct __SPI_HandleTypeDef *hspi)
 {
   /* Transmit data in 16 Bit mode */
   hspi->Instance->DR = *((uint16_t *)hspi->pTxBuffPtr);
@@ -3353,7 +3353,7 @@ static void SPI_RxISR_8BITCRC(struct __SPI_HandleTypeDef *hspi)
   *               the configuration information for SPI module.
   * @retval None
   */
-static void SPI_RxISR_8BIT(struct __SPI_HandleTypeDef *hspi)
+static void SPI_RxISR_8MSM8916_BIT(struct __SPI_HandleTypeDef *hspi)
 {
   *hspi->pRxBuffPtr++ = (*(__IO uint8_t *)&hspi->Instance->DR);
   hspi->RxXferCount--;
@@ -3409,7 +3409,7 @@ static void SPI_RxISR_16BITCRC(struct __SPI_HandleTypeDef *hspi)
   *               the configuration information for SPI module.
   * @retval None
   */
-static void SPI_RxISR_16BIT(struct __SPI_HandleTypeDef *hspi)
+static void SPI_RxISR_16MSM8916_BIT(struct __SPI_HandleTypeDef *hspi)
 {
   *((uint16_t *)hspi->pRxBuffPtr) = hspi->Instance->DR;
   hspi->pRxBuffPtr += sizeof(uint16_t);
@@ -3442,7 +3442,7 @@ static void SPI_RxISR_16BIT(struct __SPI_HandleTypeDef *hspi)
   *               the configuration information for SPI module.
   * @retval None
   */
-static void SPI_TxISR_8BIT(struct __SPI_HandleTypeDef *hspi)
+static void SPI_TxISR_8MSM8916_BIT(struct __SPI_HandleTypeDef *hspi)
 {
   *(__IO uint8_t *)&hspi->Instance->DR = (*hspi->pTxBuffPtr++);
   hspi->TxXferCount--;
@@ -3466,7 +3466,7 @@ static void SPI_TxISR_8BIT(struct __SPI_HandleTypeDef *hspi)
   *               the configuration information for SPI module.
   * @retval None
   */
-static void SPI_TxISR_16BIT(struct __SPI_HandleTypeDef *hspi)
+static void SPI_TxISR_16MSM8916_BIT(struct __SPI_HandleTypeDef *hspi)
 {
   /* Transmit data in 16 Bit mode */
   hspi->Instance->DR = *((uint16_t *)hspi->pTxBuffPtr);

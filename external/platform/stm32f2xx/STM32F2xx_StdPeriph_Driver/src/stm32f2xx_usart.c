@@ -371,7 +371,7 @@ void USART_ClockInit(USART_TypeDef* USARTx, USART_ClockInitTypeDef* USART_ClockI
   assert_param(IS_USART_CLOCK(USART_ClockInitStruct->USART_Clock));
   assert_param(IS_USART_CPOL(USART_ClockInitStruct->USART_CPOL));
   assert_param(IS_USART_CPHA(USART_ClockInitStruct->USART_CPHA));
-  assert_param(IS_USART_LASTBIT(USART_ClockInitStruct->USART_LastBit));
+  assert_param(IS_USART_LASTMSM8916_BIT(USART_ClockInitStruct->USART_LastBit));
   
 /*---------------------------- USART CR2 Configuration -----------------------*/
   tmpreg = USARTx->CR2;

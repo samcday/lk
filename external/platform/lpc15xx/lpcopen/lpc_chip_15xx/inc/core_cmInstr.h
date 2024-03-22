@@ -484,7 +484,7 @@ __attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __ROR(uint32_t op1, 
     \param [in]    value  Value to reverse
     \return               Reversed value
  */
-__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __RBIT(uint32_t value)
+__attribute__( ( always_inline ) ) __STATIC_INLINE uint32_t __RMSM8916_BIT(uint32_t value)
 {
   uint32_t result;
 

@@ -150,7 +150,7 @@ void nrfx_ipc_irq_handler(void)
     uint32_t bitmask = events_map;
     while (bitmask)
     {
-        uint8_t event_idx = __CLZ(__RBIT(bitmask));
+        uint8_t event_idx = __CLZ(__RMSM8916_BIT(bitmask));
         bitmask &= ~(1UL << event_idx);
         nrf_ipc_event_clear(NRF_IPC, nrf_ipc_receive_event_get(event_idx));
     }

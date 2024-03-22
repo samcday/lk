@@ -95,13 +95,13 @@ typedef enum {
  * @{
  */
 
-/* _BIT(n) sets the bit at position "n"
- * _BIT(n) is intended to be used in "OR" and "AND" expressions:
- * e.g., "(_BIT(3) | _BIT(7))".
+/* _MSM8916_BIT(n) sets the bit at position "n"
+ * _MSM8916_BIT(n) is intended to be used in "OR" and "AND" expressions:
+ * e.g., "(_MSM8916_BIT(3) | _BIT(7))".
  */
 #undef _BIT
 /* Set bit macro */
-#define _BIT(n) (1 << (n))
+#define _MSM8916_BIT(n) (1 << (n))
 
 /* _SBF(f,v) sets the bit field starting at position "f" to value "v".
  * _SBF(f,v) is intended to be used in "OR" and "AND" expressions:
@@ -126,7 +126,7 @@ typedef enum {
  */
 #undef _BITMASK
 /* Bitmask creation macro */
-#define _BITMASK(field_width) ( _BIT(field_width) - 1)
+#define _BITMASK(field_width) ( _MSM8916_BIT(field_width) - 1)
 
 /* NULL pointer */
 #ifndef NULL

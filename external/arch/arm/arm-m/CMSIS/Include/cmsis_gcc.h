@@ -373,7 +373,7 @@ __STATIC_FORCEINLINE uint32_t __ROR(uint32_t op1, uint32_t op2)
   \param [in]    value  Value to reverse
   \return               Reversed value
  */
-__STATIC_FORCEINLINE uint32_t __RBIT(uint32_t value)
+__STATIC_FORCEINLINE uint32_t __RMSM8916_BIT(uint32_t value)
 {
   uint32_t result;
 
