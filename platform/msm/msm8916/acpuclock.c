@@ -30,64 +30,9 @@
 #include <assert.h>
 #include <lk/debug.h>
 #include <lk/reg.h>
-#include <qtimer.h>
 #include <platform/iomap.h>
 #include <clock.h>
 #include <platform/clock.h>
 #include <blsp_qup.h>
 #include <platform.h>
 
-#define MAX_LOOPS	500
-
-/* Configure UART clock based on the UART block id*/
-void clock_config_uart_dm(uint8_t id)
-{
-	int ret;
-	char iclk[64];
-	char cclk[64];
-
-	snprintf(iclk, sizeof(iclk), "uart%u_iface_clk", id);
-	snprintf(cclk, sizeof(cclk), "uart%u_core_clk", id);
-
-	ret = clk_get_set_enable(iclk, 0, 1);
-	if(ret)
-	{
-		dprintf(CRITICAL, "failed to set %s ret = %d\n", iclk, ret);
-		ASSERT(0);
-	}
-
-	ret = clk_get_set_enable(cclk, 7372800, 1);
-	if(ret)
-	{
-		dprintf(CRITICAL, "failed to set %s ret = %d\n", cclk, ret);
-		ASSERT(0);
-	}
-}
-
-static void rcg_update_config(uint32_t reg)
-{
-	int i;
-
-	for (i = 0; i < MAX_LOOPS; i++) {
-		if (!(readl(reg) & (1<<0)))
-			return;
-		udelay(1);
-	}
-
-	dprintf(CRITICAL, "failed to update rcg config for reg = 0x%x\n", reg);
-	ASSERT(0);
-}
-
-static void branch_clk_halt_check(uint32_t reg)
-{
-	int i;
-
-	for (i = 0; i < MAX_LOOPS; i++) {
-		if (!(readl(reg) & (1<<31)))
-			return;
-		udelay(1);
-	}
-
-	dprintf(CRITICAL, "failed to enable branch for reg = 0x%x\n", reg);
-	ASSERT(0);
-}

@@ -28,6 +28,7 @@
 #ifndef CLOCK_PLL_H
 #define CLOCK_PLL_H
 
+#include <sys/types.h>
 #include <clock.h>
 
 /*

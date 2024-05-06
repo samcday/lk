@@ -214,7 +214,6 @@ static inline struct vote_clk *to_local_vote_clk(struct clk *clk)
 int  clock_lib2_rcg_enable(struct clk *c);
 int  clock_lib2_rcg_set_rate(struct clk *c, unsigned rate);
 void clock_lib2_rcg_set_rate_mnd(struct rcg_clk *rclk, struct clk_freq_tbl *freq);
-void clock_lib2_rcg_set_rate_hid(struct rcg_clk *rclk, struct clk_freq_tbl *freq);
 
 /* CXO clock functions */
 int  cxo_clk_enable(struct clk *clk);

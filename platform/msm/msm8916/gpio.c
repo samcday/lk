@@ -68,35 +68,3 @@ void gpio_config_uart_dm(uint8_t id)
 	gpio_tlmm_config(4, 2, GPIO_OUTPUT, GPIO_NO_PULL,
 				GPIO_8MA, GPIO_DISABLE);
 }
-
-void gpio_config_blsp_i2c(uint8_t blsp_id, uint8_t qup_id)
-{
-	if(blsp_id == BLSP_ID_1) {
-		switch (qup_id) {
-			case QUP_ID_1:
-				/* configure I2C SDA gpio */
-				gpio_tlmm_config(6, 3, GPIO_OUTPUT, GPIO_NO_PULL,
-						GPIO_8MA, GPIO_DISABLE);
-
-				/* configure I2C SCL gpio */
-				gpio_tlmm_config(7, 3, GPIO_OUTPUT, GPIO_NO_PULL,
-					GPIO_8MA, GPIO_DISABLE);
-			break;
-			case QUP_ID_3:
-				/* configure I2C SDA gpio */
-				gpio_tlmm_config(14, 2, GPIO_OUTPUT, GPIO_NO_PULL,
-						GPIO_8MA, GPIO_DISABLE);
-
-				/* configure I2C SCL gpio */
-				gpio_tlmm_config(15, 2, GPIO_OUTPUT, GPIO_NO_PULL,
-					GPIO_8MA, GPIO_DISABLE);
-			break;
-			default:
-				dprintf(CRITICAL, "Incorrect QUP id %d\n",qup_id);
-				DEBUG_ASSERT(0);
-		};
-	} else {
-		dprintf(CRITICAL, "Incorrect BLSP id %d\n",blsp_id);
-		DEBUG_ASSERT(0);
-	}
-}

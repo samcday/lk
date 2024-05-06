@@ -26,8 +26,7 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __MSM8916_CLOCK_H
-#define __MSM8916_CLOCK_H
+#pragma once
 
 #include <clock.h>
 #include <clock_lib2.h>
@@ -35,14 +34,4 @@
 
 #define UART_DM_CLK_RX_TX_BIT_RATE 0xCC
 
-#define REG_MM(off)                     (CLK_CTL_BASE + (off))
-
-#define MDP_GDSCR                       REG_MM(0x4D078)
-#define GDSC_POWER_ON_BIT               (1<<31)
-#define GDSC_EN_FEW_WAIT_MASK           (0x0F << 16)
-#define GDSC_EN_FEW_WAIT_256_MASK       (1<<19)
-
-
 void msm8916_clock_init(void);
-void clock_config_uart_dm(uint8_t id);
-#endif

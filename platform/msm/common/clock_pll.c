@@ -29,7 +29,6 @@
 #include <stdint.h>
 #include <lk/reg.h>
 #include <limits.h>
-#include <qtimer.h>
 #include <clock.h>
 #include <clock_pll.h>
 
@@ -78,63 +77,3 @@ int pll_vote_clk_is_enabled(struct clk *clk)
 	struct pll_vote_clk *pll = to_pll_vote_clk(clk);
 	return !!(readl_relaxed(pll->status_reg) & pll->status_mask);
 }
-
-/*
- * PLLs functions
- */
-int pll_clk_enable(struct clk *clk)
-{
-	uint32_t mode;
-	struct pll_clk *pll = to_pll_clk(clk);
-
-	mode = readl_relaxed(pll->mode_reg);
-	/* Disable PLL bypass mode. */
-	mode |= (1<<1);
-	writel_relaxed(mode, pll->mode_reg);
-
-	/*
-	 * H/W requires a 5us delay between disabling the bypass and
-	 * de-asserting the reset. Delay 10us just to be safe.
-	 */
-	udelay(10);
-
-	/* De-assert active-low PLL reset. */
-	mode |= (1<<2);
-	writel_relaxed(mode, pll->mode_reg);
-
-	/* Wait until PLL is locked. */
-	udelay(50);
-
-	/* Enable PLL output. */
-	mode |= (1<<0);
-	writel_relaxed(mode, pll->mode_reg);
-
-	return 0;
-}
-
-void pll_clk_disable(struct clk *clk)
-{
-	uint32_t mode;
-	struct pll_clk *pll = to_pll_clk(clk);
-
-	/*
-	 * Disable the PLL output, disable test mode, enable
-	 * the bypass mode, and assert the reset.
-	 */
-	mode = readl_relaxed(pll->mode_reg);
-	mode &= ~BM(3, 0);
-	writel_relaxed(mode, pll->mode_reg);
-}
-
-unsigned pll_clk_get_rate(struct clk *clk)
-{
-	struct pll_clk *pll = to_pll_clk(clk);
-	return pll->rate;
-}
-
-struct clk *pll_clk_get_parent(struct clk *clk)
-{
-	struct pll_clk *pll = to_pll_clk(clk);
-	return pll->parent;
-}
-

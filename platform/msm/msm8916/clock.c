@@ -57,12 +57,6 @@ static struct clk_ops clk_ops_rcg_mnd =
 	.set_rate   = clock_lib2_rcg_set_rate,
 };
 
-static struct clk_ops clk_ops_rcg =
-{
-	.enable     = clock_lib2_rcg_enable,
-	.set_rate   = clock_lib2_rcg_set_rate,
-};
-
 static struct clk_ops clk_ops_cxo =
 {
 	.enable     = cxo_clk_enable,

@@ -27,12 +27,12 @@
  */
 #include <arch/arm.h>
 #include <assert.h>
+#include <lk/debug.h>
 #include <lk/reg.h>
 #include <lk/err.h>
 #include <clock.h>
 #include <clock_pll.h>
 #include <clock_lib2.h>
-#include <qtimer.h>
 
 /*=============== CXO clock ops =============*/
 int cxo_clk_enable(struct clk *clk)
@@ -79,7 +79,8 @@ int clock_lib2_branch_clk_enable(struct clk *clk)
 			break;
 		}
 		retry--;
-		mdelay(1);
+        // TODO(msm8916):
+		spin(1000);
 	}
 
 	return rc;
@@ -195,20 +196,6 @@ void clock_lib2_rcg_set_rate_mnd(struct rcg_clk *rclk, struct clk_freq_tbl *freq
 	writel(cfg, rclk->cfg_reg);
 
 	/* Inform h/w to start using the new config. */
-	clock_lib2_rcg_update_config(rclk);
-}
-
-/* root set rate for clocks with half integer divider */
-void clock_lib2_rcg_set_rate_hid(struct rcg_clk *rclk, struct clk_freq_tbl *freq)
-{
-	uint32_t cfg;
-
-	/* setup src select and divider */
-	cfg  = readl(rclk->cfg_reg);
-	cfg &= ~(CFG_SRC_SEL_MASK | CFG_SRC_DIV_MASK);
-	cfg |= freq->div_src_val;
-	writel(cfg, rclk->cfg_reg);
-
 	clock_lib2_rcg_update_config(rclk);
 }
 

@@ -26,8 +26,7 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __UART_DM_H__
-#define __UART_DM_H__
+#pragma once
 
 #include <platform/iomap.h>
 
@@ -73,11 +72,7 @@ enum MSM_BOOT_UART_DM_BITS_PER_CHAR {
 #define MSM_BOOT_UART_DM_LOOPBACK            (1 << 7)
 
 /* UART Clock Selection Register */
-#if PERIPH_BLK_BLSP
-#define MSM_BOOT_UART_DM_CSR(base)             ((base) + 0xA0)
-#else
 #define MSM_BOOT_UART_DM_CSR(base)             ((base) + 0x08)
-#endif
 
 /* UART DM TX FIFO Registers - 4 */
 #if PERIPH_BLK_BLSP
@@ -263,7 +258,4 @@ enum MSM_BOOT_UART_DM_BITS_PER_CHAR {
 #define MSM_BOOT_UART_DM_E_MALLOC_FAIL       4
 #define MSM_BOOT_UART_DM_E_RX_NOT_READY      5
 
-void uart_dm_init(uint8_t id,
-				  uint32_t gsbi_base,
-				  uint32_t uart_dm_base);
-#endif				/* __UART_DM_H__ */
+void uart_dm_init(uint8_t id, uint32_t uart_dm_base);

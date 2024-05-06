@@ -198,10 +198,3 @@ int clk_get_set_enable(char *id, unsigned long rate, bool enable)
 get_set_enable_error:
 	return ret;
 }
-
-#ifdef DEBUG_CLOCK
-struct clk_list *clk_get_list(void)
-{
-	return &msm_clk_list;
-}
-#endif

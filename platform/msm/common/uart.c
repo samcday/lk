@@ -29,6 +29,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <kernel/thread.h>
+#include <lk/debug.h>
 #include <lk/reg.h>
 #include <lk/utils.h>
 #include <sys/types.h>
@@ -38,7 +39,6 @@
 #include <platform/clock.h>
 #include <platform/gpio.h>
 #include <uart_dm.h>
-#include <gsbi.h>
 #include <arch/arm.h>
 
 /* Note:
@@ -103,9 +103,6 @@ static unsigned int msm_boot_uart_dm_reset(uint32_t base);
 /* Keep track of uart block vs port mapping.
  */
 static uint32_t port_lookup[4];
-
-/* Extern functions */
-void udelay(unsigned usecs);
 
 /*
  * Helper function to keep track of Line Feed char "\n" with
@@ -329,7 +326,8 @@ msm_boot_uart_dm_write(uint32_t base, char *data, unsigned int num_of_chars)
 	 * If not we'll wait for TX_READY interrupt. */
 	if (!(readl(MSM_BOOT_UART_DM_SR(base)) & MSM_BOOT_UART_DM_SR_TXEMT)) {
 		while (!(readl(MSM_BOOT_UART_DM_ISR(base)) & MSM_BOOT_UART_DM_TX_READY)) {
-			udelay(1);
+            // TODO(msm8916): shouldn't be using debug spin here I think. What else?
+            spin(1);
 			/* Kick watchdog? */
 		}
 	}
@@ -355,7 +353,8 @@ msm_boot_uart_dm_write(uint32_t base, char *data, unsigned int num_of_chars)
 
 		/* Wait till TX FIFO has space */
 		while (!(readl(MSM_BOOT_UART_DM_SR(base)) & MSM_BOOT_UART_DM_SR_TXRDY)) {
-			udelay(1);
+            // TODO(msm8916): shouldn't be using debug spin here I think. What else?
+            spin(1);
 		}
 
 		/* TX FIFO has space. Write the chars */
@@ -368,11 +367,37 @@ msm_boot_uart_dm_write(uint32_t base, char *data, unsigned int num_of_chars)
 	return MSM_BOOT_UART_DM_E_SUCCESS;
 }
 
+
+/* Configure UART clock based on the UART block id*/
+static void clock_config_uart_dm(uint8_t id)
+{
+    int ret;
+    char iclk[64];
+    char cclk[64];
+
+    snprintf(iclk, sizeof(iclk), "uart%u_iface_clk", id);
+    snprintf(cclk, sizeof(cclk), "uart%u_core_clk", id);
+
+    ret = clk_get_set_enable(iclk, 0, 1);
+    if(ret)
+    {
+        dprintf(CRITICAL, "failed to set %s ret = %d\n", iclk, ret);
+        ASSERT(0);
+    }
+
+    ret = clk_get_set_enable(cclk, 7372800, 1);
+    if(ret)
+    {
+        dprintf(CRITICAL, "failed to set %s ret = %d\n", cclk, ret);
+        ASSERT(0);
+    }
+}
+
 /* Defining functions that's exposed to outside world and in coformance to
  * existing uart implemention. These functions are being called to initialize
  * UART and print debug messages in bootloader.
  */
-void uart_dm_init(uint8_t id, uint32_t gsbi_base, uint32_t uart_dm_base)
+void uart_dm_init(uint8_t id, uint32_t uart_dm_base)
 {
 	static uint8_t port = 0;
 
@@ -383,16 +408,6 @@ void uart_dm_init(uint8_t id, uint32_t gsbi_base, uint32_t uart_dm_base)
 	/* Configure GPIO to provide connectivity between UART block
 	   product ports and chip pads */
 	gpio_config_uart_dm(id);
-	DSB;
-
-	/* Configure GSBI for UART_DM protocol.
-	 * I2C on 2 ports, UART (without HS flow control) on the other 2.
-	 * This is only on chips that have GSBI block
-	 */
-	 if(gsbi_base)
-		writel(GSBI_PROTOCOL_CODE_I2C_UART <<
-			GSBI_CTRL_REG_PROTOCOL_CODE_S,
-			GSBI_CTRL_REG(gsbi_base));
 	DSB;
 
 	/* Configure clock selection register for tx and rx rates.

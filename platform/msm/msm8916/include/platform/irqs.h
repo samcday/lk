@@ -35,34 +35,19 @@
  * 16-31: PPI (private peripheral interrupts)
  * 32+:   SPI (shared peripheral interrupts)
  */
-int qtmr_irq(void);
-
 #define GIC_PPI_START                          16
 #define GIC_SPI_START                          32
 
 #define INT_QTMR_NON_SECURE_PHY_TIMER_EXP      (GIC_PPI_START + 3)
 #define INT_QTMR_VIRTUAL_TIMER_EXP             (GIC_PPI_START + 4)
 
-#define INT_QTMR_FRM_0_PHYSICAL_TIMER_EXP      qtmr_irq()
-#define INT_QTMR_FRM_0_PHYSICAL_TIMER_EXP_8x16 (GIC_SPI_START + 8)
-#define INT_QTMR_FRM_0_PHYSICAL_TIMER_EXP_8x39 (GIC_SPI_START + 257)
-#define SDCC1_PWRCTL_IRQ                       (GIC_SPI_START + 138)
-#define SDCC2_PWRCTL_IRQ                       (GIC_SPI_START + 221)
-
-#define USB1_HS_BAM_IRQ                        (GIC_SPI_START + 135)
-#define USB1_HS_IRQ                            (GIC_SPI_START + 134)
-
-/* Retrofit universal macro names */
-#define INT_USB_HS                             USB1_HS_IRQ
-
-#define EE0_KRAIT_HLOS_SPMI_PERIPH_IRQ         (GIC_SPI_START + 190)
+#define ARM_GENERIC_TIMER_PHYSICAL_INT         (GIC_SPI_START + 8)
 
 #define NR_MSM_IRQS                            256
 #define NR_GPIO_IRQS                           173
 #define NR_BOARD_IRQS                          0
 
-#define NR_IRQS                                (NR_MSM_IRQS + NR_GPIO_IRQS + \
+#define MAX_INT                                (NR_MSM_IRQS + NR_GPIO_IRQS + \
                                                NR_BOARD_IRQS)
 
-#define BLSP_QUP_IRQ(blsp_id, qup_id)          (GIC_SPI_START + 95 + qup_id)
 #endif /* __IRQS_MSM8916_H */

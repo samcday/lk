@@ -16,5 +16,9 @@ MEMBASE := 0x8F600000
 MEMSIZE := 0x00100000
 KERNEL_BASE = $(MEMBASE)
 
+MODULE_DEPS += \
+    dev/interrupt/arm_gic \
+    dev/timer/arm_generic
+
 include platform/msm/common/rules.mk
 include make/module.mk

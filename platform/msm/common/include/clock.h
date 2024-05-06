@@ -26,8 +26,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef CLOCK_H
-#define CLOCK_H
+#pragma once
 
 #include <stdbool.h>
 
@@ -179,10 +178,6 @@ struct clk_list {
 
 #define CLK_LOOKUP(con, c) { .con_id = con, .clk = &c }
 
-#ifdef DEBUG_CLOCK
-struct clk_list *clk_get_list(void);
-#endif
-
 /**
  * clk_init - register all the clocks in the system.
  * @clist: pointer to clock list
@@ -195,4 +190,4 @@ void clk_init(struct clk_lookup *clist, unsigned num);
  * @action: clock assert or deassert
  */
 int clk_reset(struct clk *clk, enum clk_reset_action);
-#endif
+

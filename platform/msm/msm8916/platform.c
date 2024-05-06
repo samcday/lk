@@ -8,6 +8,8 @@
 #include <uart_dm.h>
 #include <arch/arm.h>
 #include <arch/arm/mmu.h>
+#include <dev/interrupt/arm_gic.h>
+#include <dev/timer/arm_generic.h>
 #include <kernel/vm.h>
 #include <platform/irqs.h>
 #include <dev/uart.h>
@@ -62,14 +64,11 @@ static pmm_arena_t arena = {
 };
 
 void platform_early_init(void) {
+    arm_gic_init();
+    arm_generic_timer_init(ARM_GENERIC_TIMER_PHYSICAL_INT, 0);
     msm8916_clock_init();
-    uart_dm_init(2, 0, BLSP1_UART1_BASE);
+    uart_dm_init(2, BLSP1_UART1_BASE);
     pmm_add_arena(&arena);
-}
-
-int qtmr_irq(void)
-{
-    return INT_QTMR_FRM_0_PHYSICAL_TIMER_EXP_8x16;
 }
 
 int platform_dgetc(char *c, bool wait)
