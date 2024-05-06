@@ -41,13 +41,6 @@
 #include <gsbi.h>
 #include <arch/arm.h>
 
-#ifndef NULL
-#define NULL        0
-#endif
-
-
-static int uart_init_flag = 0;
-
 /* Note:
  * This is a basic implementation of UART_DM protocol. More focus has been
  * given on simplicity than efficiency. Few of the things to be noted are:
@@ -382,7 +375,6 @@ msm_boot_uart_dm_write(uint32_t base, char *data, unsigned int num_of_chars)
 void uart_dm_init(uint8_t id, uint32_t gsbi_base, uint32_t uart_dm_base)
 {
 	static uint8_t port = 0;
-	char *data = "Android Bootloader - UART_DM Initialized!!!\n";
 
 	/* Configure the uart clock */
 	clock_config_uart_dm(id);
@@ -412,13 +404,8 @@ void uart_dm_init(uint8_t id, uint32_t gsbi_base, uint32_t uart_dm_base)
 	/* Intialize UART_DM */
 	msm_boot_uart_dm_init(uart_dm_base);
 
-	msm_boot_uart_dm_write(uart_dm_base, data, 44);
-
 	ASSERT(port < ARRAY_SIZE(port_lookup));
 	port_lookup[port++] = uart_dm_base;
-
-	/* Set UART init flag */
-	uart_init_flag = 1;
 }
 
 /* UART_DM uses four character word FIFO where as UART core
@@ -429,10 +416,6 @@ void uart_dm_init(uint8_t id, uint32_t gsbi_base, uint32_t uart_dm_base)
 int uart_putc(int port, char c)
 {
 	uint32_t uart_base = port_lookup[port];
-
-	/* Don't do anything if UART is not initialized */
-	if (!uart_init_flag)
-		return -1;
 
 	msm_boot_uart_dm_write(uart_base, &c, 1);
 
@@ -448,10 +431,6 @@ int uart_getc(int port, bool wait)
 	int byte;
 	static unsigned int word = 0;
 	uint32_t uart_base = port_lookup[port];
-
-	/* Don't do anything if UART is not initialized */
-	if (!uart_init_flag)
-		return -1;
 
 	if (!word) {
 		/* Read from FIFO only if it's a first read or all the four
