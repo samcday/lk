@@ -7,7 +7,6 @@ ARM_CPU := cortex-a8
 CPU     := generic
 
 MODULE_SRCS += \
-	$(LOCAL_DIR)/acpuclock.c \
 	$(LOCAL_DIR)/clock.c \
 	$(LOCAL_DIR)/gpio.c \
 	$(LOCAL_DIR)/platform.c

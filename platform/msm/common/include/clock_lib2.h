@@ -26,8 +26,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __CLOCK_LIB2_H
-#define __CLOCK_LIB2_H
+#pragma once
 
 #include <clock.h>
 
@@ -230,4 +229,3 @@ void clock_lib2_vote_clk_disable(struct clk *c);
 /* clock reset function */
 int clock_lib2_reset_clk_reset(struct clk *c, enum clk_reset_action action);
 int clock_lib2_branch_clk_reset(struct clk *c, enum clk_reset_action action);
-#endif

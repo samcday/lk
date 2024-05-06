@@ -30,7 +30,6 @@
 #include <lk/reg.h>
 #include <platform/iomap.h>
 #include <platform/gpio.h>
-#include <blsp_qup.h>
 #include <assert.h>
 
 void gpio_tlmm_config(uint32_t gpio, uint8_t func,
@@ -44,17 +43,6 @@ void gpio_tlmm_config(uint32_t gpio, uint8_t func,
 	val |= enable << 9;
 	writel(val, (uint32_t *)GPIO_CONFIG_ADDR(gpio));
 	return;
-}
-
-void gpio_set_dir(uint32_t gpio, uint32_t dir)
-{
-	writel(dir, (uint32_t *)GPIO_IN_OUT_ADDR(gpio));
-	return;
-}
-
-uint32_t gpio_status(uint32_t gpio)
-{
-	return readl(GPIO_IN_OUT_ADDR(gpio)) & GPIO_IN;
 }
 
 /* Configure gpio for blsp uart 2 */
