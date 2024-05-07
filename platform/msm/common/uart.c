@@ -27,232 +27,54 @@
  */
 
 #include <string.h>
-#include <stdlib.h>
 #include <kernel/thread.h>
 #include <lk/debug.h>
+#include <lk/err.h>
 #include <lk/reg.h>
 #include <lk/utils.h>
-#include <sys/types.h>
-#include <platform/iomap.h>
-#include <platform/irqs.h>
-#include <platform/interrupts.h>
 #include <platform/clock.h>
 #include <platform/gpio.h>
 #include <uart_dm.h>
-#include <arch/arm.h>
 
-/* Note:
- * This is a basic implementation of UART_DM protocol. More focus has been
- * given on simplicity than efficiency. Few of the things to be noted are:
- * - RX path may not be suitable for multi-threaded scenaraio because of the
- *   use of static variables. TX path shouldn't have any problem though. If
- *   multi-threaded support is required, a simple data-structure can
- *   be maintained for each thread.
- * - Right now we are using polling method than interrupt based.
- * - We are using legacy UART protocol without Data Mover.
- * - Not all interrupts and error events are handled.
- * - While waiting Watchdog hasn't been taken into consideration.
- */
+/* Mostly a copy/pasta from U-Boot. Interestingly, some of the constants in
+ * U-Boot make me think that it was originally based on CAF LK code. So,
+ * everything comes full circle. */
 
-#define NON_PRINTABLE_ASCII_CHAR      128
+#define UARTDM_DMRX             0x34 /* Max RX transfer length */
+#define UARTDM_DMEN             0x3C /* DMA/data-packing mode */
+#define UARTDM_NCF_TX           0x40 /* Number of chars to TX */
 
-static uint8_t pack_chars_into_words(uint8_t *buffer, uint8_t cnt, uint32_t *word)
-{
-	uint8_t num_chars_writtten = 0;
+#define UARTDM_CSR				 0xA0
 
-	*word = 0;
+#define UARTDM_SR                0xA4 /* Status register */
+#define UARTDM_SR_RX_READY       (1 << 0) /* Word is the receiver FIFO */
+#define UARTDM_SR_TX_EMPTY       (1 << 3) /* Transmitter underrun */
+#define UARTDM_SR_UART_OVERRUN   (1 << 4) /* Receive overrun */
 
-	 for(int j=0; j < cnt; j++)
-	 {
-		 if (buffer[num_chars_writtten] == '\n')
-		 {
-			/* replace '\n' by the NON_PRINTABLE_ASCII_CHAR and print '\r'.
-			 * While printing the NON_PRINTABLE_ASCII_CHAR, we will print '\n'.
-			 * Thus successfully replacing '\n' by '\r' '\n'.
-			 */
-			*word |= ('\r' & 0xff) << (j * 8);
-			buffer[num_chars_writtten] = NON_PRINTABLE_ASCII_CHAR;
-		 }
-		 else
-		 {
-			if (buffer[num_chars_writtten] == NON_PRINTABLE_ASCII_CHAR)
-			{
-				buffer[num_chars_writtten] = '\n';
-			}
+#define UARTDM_CR                         0xA8 /* Command register */
+#define UARTDM_CR_CMD_RESET_ERR           (3 << 4) /* Clear overrun error */
+#define UARTDM_CR_CMD_RESET_STALE_INT     (8 << 4) /* Clears stale irq */
+#define UARTDM_CR_CMD_RESET_TX_READY      (3 << 8) /* Clears TX Ready irq*/
+#define UARTDM_CR_CMD_FORCE_STALE         (4 << 8) /* Causes stale event */
 
-			 *word |= (buffer[num_chars_writtten] & 0xff) << (j * 8);
+#define UARTDM_ISR                0xB4 /* Interrupt status register */
+#define UARTDM_ISR_TX_READY       0x80 /* TX FIFO empty */
 
-			 num_chars_writtten++;
-		 }
-	 }
+#define UARTDM_TF               0x100 /* UART Transmit FIFO register */
+#define UARTDM_RF               0x140 /* UART Receive FIFO register */
 
-	 return num_chars_writtten;
-}
+#define UARTDM_RXFS             0x50 /* RX channel status register */
+#define UARTDM_RXFS_BUF_SHIFT   0x7  /* Number of bytes in the packing buffer */
+#define UARTDM_RXFS_BUF_MASK    0x7
+#define UARTDM_MR1				 0x00
+#define UARTDM_MR2				 0x04
 
-/* Static Function Prototype Declarations */
-static unsigned int msm_boot_uart_calculate_num_chars_to_write(char *data_in,
-							       uint32_t *num_of_chars);
-static unsigned int msm_boot_uart_dm_init(uint32_t base);
-static unsigned int msm_boot_uart_dm_read(uint32_t base,
-	unsigned int *data, int wait);
-static unsigned int msm_boot_uart_dm_write(uint32_t base, char *data,
-	unsigned int num_of_chars);
-static unsigned int msm_boot_uart_dm_init_rx_transfer(uint32_t base);
-static unsigned int msm_boot_uart_dm_reset(uint32_t base);
+#define MSM_BOOT_UART_DM_8_N_1_MODE	0x34
+#define MSM_BOOT_UART_DM_CMD_RESET_RX	0x10
+#define MSM_BOOT_UART_DM_CMD_RESET_TX	0x20
+#define MSM_UART_MR1_RX_RDY_CTL		(1 << 7)
 
-/* Keep track of uart block vs port mapping.
- */
 static uint32_t port_lookup[4];
-
-/*
- * Helper function to keep track of Line Feed char "\n" with
- * Carriage Return "\r\n".
- */
-static unsigned int
-msm_boot_uart_calculate_num_chars_to_write(char *data_in,
-				uint32_t *num_of_chars)
-{
-	uint32_t i = 0, j = 0;
-
-	if ((data_in == NULL)) {
-		return MSM_BOOT_UART_DM_E_INVAL;
-	}
-
-	for (i = 0, j = 0; i < *num_of_chars; i++, j++) {
-		if (data_in[i] == '\n') {
-			j++;
-		}
-
-	}
-
-	*num_of_chars = j;
-
-	return MSM_BOOT_UART_DM_E_SUCCESS;
-}
-
-/*
- * Initialize Receive Path
- */
-static unsigned int msm_boot_uart_dm_init_rx_transfer(uint32_t uart_dm_base)
-{
-	writel(MSM_BOOT_UART_DM_GCMD_DIS_STALE_EVT, MSM_BOOT_UART_DM_CR(uart_dm_base));
-	writel(MSM_BOOT_UART_DM_CMD_RES_STALE_INT, MSM_BOOT_UART_DM_CR(uart_dm_base));
-	writel(MSM_BOOT_UART_DM_DMRX_DEF_VALUE, MSM_BOOT_UART_DM_DMRX(uart_dm_base));
-	writel(MSM_BOOT_UART_DM_GCMD_ENA_STALE_EVT, MSM_BOOT_UART_DM_CR(uart_dm_base));
-
-	return MSM_BOOT_UART_DM_E_SUCCESS;
-}
-
-/*
- * UART Receive operation
- * Reads a word from the RX FIFO.
- */
-static unsigned int
-msm_boot_uart_dm_read(uint32_t base, unsigned int *data, int wait)
-{
-    unsigned int sr;
-    unsigned int count;
-
-    if (data == NULL) {
-        return MSM_BOOT_UART_DM_E_INVAL;
-    }
-
-    /* Check for Overrun error. We'll just reset Error Status */
-    if (readl(MSM_BOOT_UART_DM_SR(base)) & MSM_BOOT_UART_DM_SR_UART_OVERRUN) {
-        writel(MSM_BOOT_UART_DM_CMD_RESET_ERR_STAT, MSM_BOOT_UART_DM_CR(base));
-    }
-
-    sr = readl(MSM_BOOT_UART_DM_SR(base));
-    if (sr & MSM_BOOT_UART_DM_SR_RXRDY) {
-        /* There are at least 4 bytes in fifo */
-        *data = readl(MSM_BOOT_UART_DM_RF(base, 0));
-    } else {
-        /* Check if there is anything in fifo */
-        count = readl(MSM_BOOT_UART_DM_RXFS(base)) >> 0x7 & 0x7;
-        if (!count) {
-            return MSM_BOOT_UART_DM_E_RX_NOT_READY;
-        }
-        /* There is at least one character, move it to fifo */
-        writel(MSM_BOOT_UART_DM_GCMD_SW_FORCE_STALE, MSM_BOOT_UART_DM_CR(base));
-        *data = readl(MSM_BOOT_UART_DM_RF(base, 0));
-        writel(MSM_BOOT_UART_DM_GCMD_RESET_STALE_INT, MSM_BOOT_UART_DM_CR(base));
-        writel(0x7, MSM_BOOT_UART_DM_DMRX(base));
-    }
-
-    return MSM_BOOT_UART_DM_E_SUCCESS;
-}
-
-/*
- * UART transmit operation
- */
-static unsigned int
-msm_boot_uart_dm_write(uint32_t base, char *data, unsigned int num_of_chars)
-{
-	unsigned int tx_word_count = 0;
-	unsigned int tx_char_left = 0, tx_char = 0;
-	unsigned int tx_word = 0;
-	int i = 0;
-	char *tx_data = NULL;
-	uint8_t num_chars_written;
-
-	if ((data == NULL) || (num_of_chars <= 0)) {
-		return MSM_BOOT_UART_DM_E_INVAL;
-	}
-
-	msm_boot_uart_calculate_num_chars_to_write(data, &num_of_chars);
-
-	tx_data = data;
-
-	/* Write to NO_CHARS_FOR_TX register number of characters
-	 * to be transmitted. However, before writing TX_FIFO must
-	 * be empty as indicated by TX_READY interrupt in IMR register
-	 */
-
-	/* Check if transmit FIFO is empty.
-	 * If not we'll wait for TX_READY interrupt. */
-	if (!(readl(MSM_BOOT_UART_DM_SR(base)) & MSM_BOOT_UART_DM_SR_TXEMT)) {
-		while (!(readl(MSM_BOOT_UART_DM_ISR(base)) & MSM_BOOT_UART_DM_TX_READY)) {
-            // TODO(msm8916): shouldn't be using debug spin here I think. What else?
-            spin(1);
-			/* Kick watchdog? */
-		}
-	}
-
-	//We need to make sure the DM_NO_CHARS_FOR_TX&DM_TF are are programmed atmoically.
-	THREAD_LOCK(state);
-	/* We are here. FIFO is ready to be written. */
-	/* Write number of characters to be written */
-	writel(num_of_chars, MSM_BOOT_UART_DM_NO_CHARS_FOR_TX(base));
-
-	/* Clear TX_READY interrupt */
-	writel(MSM_BOOT_UART_DM_GCMD_RES_TX_RDY_INT, MSM_BOOT_UART_DM_CR(base));
-
-	/* We use four-character word FIFO. So we need to divide data into
-	 * four characters and write in UART_DM_TF register */
-	tx_word_count = (num_of_chars % 4) ? ((num_of_chars / 4) + 1) :
-	    (num_of_chars / 4);
-	tx_char_left = num_of_chars;
-
-	for (i = 0; i < (int)tx_word_count; i++) {
-		tx_char = (tx_char_left < 4) ? tx_char_left : 4;
-		num_chars_written = pack_chars_into_words((uint8_t *)tx_data, tx_char, &tx_word);
-
-		/* Wait till TX FIFO has space */
-		while (!(readl(MSM_BOOT_UART_DM_SR(base)) & MSM_BOOT_UART_DM_SR_TXRDY)) {
-            // TODO(msm8916): shouldn't be using debug spin here I think. What else?
-            spin(1);
-		}
-
-		/* TX FIFO has space. Write the chars */
-		writel(tx_word, MSM_BOOT_UART_DM_TF(base, 0));
-		tx_char_left = num_of_chars - (i + 1) * 4;
-		tx_data = tx_data + num_chars_written;
-	}
-	THREAD_UNLOCK(state);
-
-	return MSM_BOOT_UART_DM_E_SUCCESS;
-}
-
 
 /* Configure UART clock based on the UART block id*/
 static void clock_config_uart_dm(uint8_t id)
@@ -279,72 +101,97 @@ static void clock_config_uart_dm(uint8_t id)
     }
 }
 
-/* Defining functions that's exposed to outside world and in coformance to
- * existing uart implemention. These functions are being called to initialize
- * UART and print debug messages in bootloader.
- */
-void uart_dm_init(uint8_t id, uint32_t uart_dm_base)
+void uart_dm_init(uint8_t id, uint32_t base)
 {
 	static uint8_t port = 0;
 
-	/* Configure the uart clock */
 	clock_config_uart_dm(id);
-	DSB;
-
-	/* Configure GPIO to provide connectivity between UART block
-	   product ports and chip pads */
 	gpio_config_uart_dm(id);
-	DSB;
 
-	/* Configure clock selection register for tx and rx rates.
-	 * Selecting 115.2k for both RX and TX.
-	 */
-	writel(UART_DM_CLK_RX_TX_BIT_RATE, MSM_BOOT_UART_DM_CSR(uart_dm_base));
-	DSB;
+    /* CAF LK had some unnecessary DMBs here, and U-Boot still has a 5ms delay
+     * because otherwise pins pick up some random noise. */
+
+	writel(UART_DM_CLK_RX_TX_BIT_RATE, base + UARTDM_CSR);
 
     /* Enable RS232 flow control to support RS232 db9 connector */
-    writel(1 << 7, MSM_BOOT_UART_DM_MR1(uart_dm_base));
+    writel(MSM_UART_MR1_RX_RDY_CTL, base + UARTDM_MR1);
     /* 8-N-1 configuration: 8 data bits - No parity - 1 stop bit */
-    writel(MSM_BOOT_UART_DM_8_N_1_MODE, MSM_BOOT_UART_DM_MR2(uart_dm_base));
+    writel(MSM_BOOT_UART_DM_8_N_1_MODE, base + UARTDM_MR2);
 
-    writel(MSM_BOOT_UART_DM_CMD_RESET_RX, MSM_BOOT_UART_DM_CR(uart_dm_base));
-    writel(MSM_BOOT_UART_DM_CMD_RESET_TX, MSM_BOOT_UART_DM_CR(uart_dm_base));
+    writel(MSM_BOOT_UART_DM_CMD_RESET_RX, base + UARTDM_CR);
+    writel(MSM_BOOT_UART_DM_CMD_RESET_TX, base + UARTDM_CR);
+
+    /* Make sure BAM/single character mode is disabled */
+    writel(0x0, base + UARTDM_DMEN);
 
 	ASSERT(port < ARRAY_SIZE(port_lookup));
-	port_lookup[port++] = uart_dm_base;
+	port_lookup[port++] = base;
 }
 
-/* UART_DM uses four character word FIFO where as UART core
- * uses a character FIFO. so it's really inefficient to try
- * to write single character. But that's how dprintf has been
- * implemented.
- */
+static void serial_write(uint32_t base, const char c) {
+    while (!(readl(base + UARTDM_SR) & UARTDM_SR_TX_EMPTY) &&
+           !(readl(base + UARTDM_ISR) & UARTDM_ISR_TX_READY)) {}
+
+    writel(UARTDM_CR_CMD_RESET_TX_READY, base + UARTDM_CR);
+
+    writel(1, base + UARTDM_NCF_TX);
+    writel(c, base + UARTDM_TF);
+}
+
 int uart_putc(int port, char c)
 {
-	uint32_t uart_base = port_lookup[port];
+	uint32_t base = port_lookup[port];
 
-	msm_boot_uart_dm_write(uart_base, &c, 1);
+    if (c == '\n') {
+        serial_write(base, '\r');
+    }
+    serial_write(base, c);
 
-	return 0;
+    return true;
 }
 
-/* UART_DM uses four character word FIFO whereas uart_getc
- * is supposed to read only one character. So we need to
- * read a word and keep track of each character in the word.
- */
+static int serial_fetch(uint32_t base, unsigned int *word) {
+    unsigned int sr;
+    unsigned int count;
+
+    /* Clear error in case of buffer overrun */
+    if (readl(base + UARTDM_SR) & UARTDM_SR_UART_OVERRUN)
+        writel(UARTDM_CR_CMD_RESET_ERR, base + UARTDM_CR);
+
+    /* We need to fetch new character */
+    sr = readl(base + UARTDM_SR);
+
+    if (sr & UARTDM_SR_RX_READY) {
+        /* There are at least 4 bytes in fifo */
+        *word = readl(base + UARTDM_RF);
+    } else {
+        /* Check if there is anything in fifo */
+        count = (readl(base + UARTDM_RXFS) >> UARTDM_RXFS_BUF_SHIFT)
+                    & UARTDM_RXFS_BUF_MASK;
+        if (!count) {
+            return ERR_NOT_READY;
+        }
+        /* There is at least one character, move it to fifo */
+        writel(UARTDM_CR_CMD_FORCE_STALE, base + UARTDM_CR);
+        *word = readl(base + UARTDM_RF);
+        writel(UARTDM_CR_CMD_RESET_STALE_INT, base + UARTDM_CR);
+        writel(0x7, base + UARTDM_DMRX);
+    }
+
+    return NO_ERROR;
+}
+
 int uart_getc(int port, bool wait)
 {
 	int byte;
 	static unsigned int word = 0;
-	uint32_t uart_base = port_lookup[port];
+	uint32_t base = port_lookup[port];
 
 	if (!word) {
-		/* Read from FIFO only if it's a first read or all the four
-		 * characters out of a word have been read */
-		if (msm_boot_uart_dm_read(uart_base, &word, wait) != MSM_BOOT_UART_DM_E_SUCCESS) {
-			return -1;
-		}
-
+        while (serial_fetch(base, &word) < 0 && wait) {}
+        if (word == 0) {
+            return -1;
+        }
 	}
 
 	byte = (int)word & 0xff;
