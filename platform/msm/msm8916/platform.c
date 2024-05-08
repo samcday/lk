@@ -9,7 +9,8 @@
 #include <arch/arm.h>
 #include <arch/arm/mmu.h>
 #include <dev/interrupt/arm_gic.h>
-#include <dev/timer/arm_generic.h>
+//#include <dev/timer/arm_generic.h>
+#include <qtimer.h>
 #include <kernel/vm.h>
 #include <platform/irqs.h>
 #include <dev/uart.h>
@@ -71,7 +72,8 @@ void platform_early_init(void) {
     msm8916_clock_init();
     uart_dm_init(2, BLSP1_UART1_BASE);
     arm_gic_init();
-    arm_generic_timer_init(ARM_GENERIC_TIMER_PHYSICAL_INT, 19200000);
+//    arm_generic_timer_init(ARM_GENERIC_TIMER_PHYSICAL_INT, 19200000);
+    qtimer_init();
     pmm_add_arena(&arena);
 }
 
@@ -104,3 +106,8 @@ static int cmd_readl(int argc, const console_cmd_args *argv) {
 STATIC_COMMAND_START
 STATIC_COMMAND("readl", "read register", &cmd_readl)
 STATIC_COMMAND_END(msm8916);
+
+int qtmr_irq(void)
+{
+    return INT_QTMR_FRM_0_PHYSICAL_TIMER_EXP_8x16;
+}

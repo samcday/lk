@@ -26,22 +26,15 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __IRQS_MSM8916_H
-#define __IRQS_MSM8916_H
+#pragma once
 
-/* MSM ACPU Interrupt Numbers */
-
-/* 0-15:  STI/SGI (software triggered/generated interrupts)
- * 16-31: PPI (private peripheral interrupts)
- * 32+:   SPI (shared peripheral interrupts)
- */
 #define GIC_PPI_START                          16
 #define GIC_SPI_START                          32
 
-#define INT_QTMR_NON_SECURE_PHY_TIMER_EXP      (GIC_PPI_START + 3)
-#define INT_QTMR_VIRTUAL_TIMER_EXP             (GIC_PPI_START + 4)
-
-#define ARM_GENERIC_TIMER_PHYSICAL_INT         (GIC_SPI_START + 8)
+int qtmr_irq(void);
+#define INT_QTMR_FRM_0_PHYSICAL_TIMER_EXP      qtmr_irq()
+#define INT_QTMR_FRM_0_PHYSICAL_TIMER_EXP_8x16 (GIC_SPI_START + 8)
+#define INT_QTMR_FRM_0_PHYSICAL_TIMER_EXP_8x39 (GIC_SPI_START + 257)
 
 #define NR_MSM_IRQS                            256
 #define NR_GPIO_IRQS                           173
@@ -49,5 +42,3 @@
 
 #define MAX_INT                                (NR_MSM_IRQS + NR_GPIO_IRQS + \
                                                NR_BOARD_IRQS)
-
-#endif /* __IRQS_MSM8916_H */
