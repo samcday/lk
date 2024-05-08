@@ -105,8 +105,8 @@ void uart_dm_init(uint8_t id, uint32_t base)
 {
 	static uint8_t port = 0;
 
-	clock_config_uart_dm(id);
-	gpio_config_uart_dm(id);
+//	clock_config_uart_dm(id);
+//	gpio_config_uart_dm(id);
 
     /* CAF LK had some unnecessary DMBs here, and U-Boot still has a 5ms delay
      * because otherwise pins pick up some random noise. */
