@@ -31,7 +31,6 @@
 #include <lk/reg.h>
 #include <lk/err.h>
 #include <clock.h>
-#include <clock_pll.h>
 #include <clock_lib2.h>
 
 /*=============== CXO clock ops =============*/
@@ -44,7 +43,6 @@ int cxo_clk_enable(struct clk *clk)
 void cxo_clk_disable(struct clk *clk)
 {
 	/* Nothing to do. */
-	return;
 }
 
 
@@ -230,51 +228,4 @@ void clock_lib2_vote_clk_disable(struct clk *c)
 	vote_regval = readl(vclk->vote_reg);
 	vote_regval &= ~vclk->en_mask;
     writel_relaxed(vote_regval, vclk->vote_reg);
-}
-
-/* Reset clock */
-static int __clock_lib2_branch_clk_reset(uint32_t bcr_reg, enum clk_reset_action action)
-{
-	uint32_t reg;
-	int ret = 0;
-
-	reg = readl(bcr_reg);
-
-	switch (action) {
-	case CLK_RESET_ASSERT:
-		reg |= (1<<0);
-		break;
-	case CLK_RESET_DEASSERT:
-		reg &= ~(1<<0);
-		break;
-	default:
-		ret = 1;
-	}
-
-	writel(reg, bcr_reg);
-
-	/* Wait for writes to go through */
-	DMB;
-
-	return ret;
-}
-
-int clock_lib2_reset_clk_reset(struct clk *c, enum clk_reset_action action)
-{
-	struct reset_clk *rst = to_reset_clk(c);
-
-	if (!rst)
-		return 0;
-
-	return __clock_lib2_branch_clk_reset(rst->bcr_reg, action);
-}
-
-int clock_lib2_branch_clk_reset(struct clk *c, enum clk_reset_action action)
-{
-	struct branch_clk *bclk = to_branch_clk(c);
-
-	if (!bclk)
-		return 0;
-
-	return __clock_lib2_branch_clk_reset((uint32_t)bclk->bcr_reg, action);
 }

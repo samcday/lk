@@ -60,18 +60,6 @@ void pll_vote_clk_disable(struct clk *clk)
 	writel_relaxed(ena, pll->en_reg);
 }
 
-unsigned pll_vote_clk_get_rate(struct clk *clk)
-{
-	struct pll_vote_clk *pll = to_pll_vote_clk(clk);
-	return pll->rate;
-}
-
-struct clk *pll_vote_clk_get_parent(struct clk *clk)
-{
-	struct pll_vote_clk *pll = to_pll_vote_clk(clk);
-	return pll->parent;
-}
-
 int pll_vote_clk_is_enabled(struct clk *clk)
 {
 	struct pll_vote_clk *pll = to_pll_vote_clk(clk);
