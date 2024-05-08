@@ -10,6 +10,10 @@ ARCH    := arm
 # ought to be resolved ...
 ARM_CPU := cortex-a9
 
+# ... And indeed the target CPU issue needs to be resolved, because SMP works
+# for the cortex-a8 target, but not cortex-a9.
+#WITH_SMP := 1
+
 MODULE_SRCS += \
 	$(LOCAL_DIR)/clock.c \
 	$(LOCAL_DIR)/gpio.c \
