@@ -14,6 +14,10 @@
 #include <platform/irqs.h>
 #include <dev/uart.h>
 
+#include <lk/console_cmd.h>
+#include <lk/reg.h>
+#include <kernel/timer.h>
+
 struct mmu_initial_mapping mmu_initial_mappings[] = {
     {
         .phys = MEMBASE,
@@ -87,3 +91,16 @@ void platform_dputc(char c)
 {
     uart_putc(0, c);
 }
+
+static int cmd_readl(int argc, const console_cmd_args *argv) {
+    if (argc != 2) {
+        return -1;
+    }
+
+    printf("0x%08x val: %d\n", argv[1].u, readl(argv[1].u));
+    return 0;
+}
+
+STATIC_COMMAND_START
+STATIC_COMMAND("readl", "read register", &cmd_readl)
+STATIC_COMMAND_END(msm8916);
