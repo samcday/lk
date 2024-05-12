@@ -3,16 +3,8 @@ LOCAL_DIR := $(GET_LOCAL_DIR)
 MODULE := $(LOCAL_DIR)
 
 ARCH    := arm
-
-# When targetting cortex-a8 as lk2nd does, we run into a panic in fpu.c
-# (the check in arm_fpu_undefined_instruction). So for now the target is a9
-# which doesn't define ARM_WITH_VFP. Seems like there's a deeper issue that
-# ought to be resolved ...
-ARM_CPU := cortex-a9
-
-# ... And indeed the target CPU issue needs to be resolved, because SMP works
-# for the cortex-a8 target, but not cortex-a9.
-#WITH_SMP := 1
+ARM_CPU := cortex-a8
+WITH_SMP := 1
 
 MODULE_SRCS += \
 	$(LOCAL_DIR)/clock.c \
