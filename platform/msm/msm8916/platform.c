@@ -69,9 +69,8 @@ static pmm_arena_t arena = {
 };
 
 void platform_early_init(void) {
+    msm8916_clock_init();
     uart_dm_init(2, BLSP1_UART1_BASE);
-    dprintf(SPEW, "hi mom\n");
-//    msm8916_clock_init();
     arm_gic_init();
 //    arm_generic_timer_init(ARM_GENERIC_TIMER_PHYSICAL_INT, 19200000);
     qtimer_init();
