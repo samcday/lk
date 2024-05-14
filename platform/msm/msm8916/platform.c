@@ -39,24 +39,6 @@ struct mmu_initial_mapping mmu_initial_mappings[] = {
         .size = A53_SS_END - A53_SS_BASE,
         .flags = MMU_INITIAL_MAPPING_FLAG_DEVICE,
     },
-    {
-        .phys = SYSTEM_IMEM_BASE,
-        .virt = SYSTEM_IMEM_BASE,
-        .size = MB,
-        .flags = 0,
-    },
-    {
-        .phys = MSM_SHARED_BASE,
-        .virt = MSM_SHARED_BASE,
-        .size = MB,
-        .flags = 0,
-    },
-    {
-        .phys = SCRATCH_ADDR,
-        .virt = SCRATCH_ADDR,
-        .size = 256*MB,
-        .flags = 0,
-    },
     /* null entry to terminate the list */
     { 0 }
 };
